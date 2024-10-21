@@ -1,0 +1,39 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Get Dependency
+
+`LGF:GetDependency()` verifies whether a specific resource is loaded and if its version matches the required version. This function is essential for ensuring that dependencies are correctly managed and compatible in your application.
+
+
+```lua copy
+---@param resource_name string
+---@param required_version string
+---@return boolean, string
+LGF:GetDependency(resourceName, version)
+```
+
+### Parameters
+
+- **`resource_name`** (string): The name of the resource whose status and version you want to check.
+- **`required_version`** (string): The version of the resource that is required for compatibility.
+
+### Returns
+
+- **`boolean`**: `true` if the resource is running and the version matches the required version; `false` otherwise.
+- **`string`**: A message indicating the result. If `false`, the message explains why the dependency check failed.
+
+### Usage
+
+To use `LGF:GetDependency()`, call the function with the resource name and the required version. The returned boolean and message can be used to handle resource dependencies dynamically. Here’s how you might use it:
+
+```lua copy
+local LGF = exports['LGF_Utility']:UtilityData()
+LGF:GetDependency("LGF_Utility", "1.2.3")
+```
+
+### Notes
+
+- Ensure that the resource name and version are correctly specified to get accurate results.
+
+- This function is useful for managing dependencies and ensuring compatibility across different parts of your application.

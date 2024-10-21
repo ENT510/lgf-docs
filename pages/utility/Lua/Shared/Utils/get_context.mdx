@@ -1,0 +1,34 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Get Context
+
+The `LGF:GetContext()` function determines whether the current script is running on the server side or client side of your application. This functionality is useful for dynamically adjusting behavior based on the execution environment.
+
+```lua copy
+---@return string | server | client
+LGF:GetContext()
+```
+
+### Returns
+
+- **"server"**: Indicates that the script is running on the server side.
+- **"client"**: Indicates that the script is running on the client side.
+- **Throws an error**: If the environment cannot be determined. The error message will be:
+  - `"Unable to determine path: Not running on either server or client side"`.
+
+### Usage
+
+To use `LGF:GetContext()`, call the function and use the returned value to execute environment-specific code. Here’s how you can do it:
+
+```lua copy
+local LGF = exports['LGF_Utility']:UtilityData()
+
+local path = LGF:GetContext()
+
+if path == "server" then
+    print("Running on the server side")
+elseif path == "client" then
+    print("Running on the client side")
+end
+```

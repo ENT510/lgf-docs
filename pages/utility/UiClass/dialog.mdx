@@ -1,0 +1,146 @@
+# Dialog Management Documentation
+
+The Dialog Management System is a feature designed to enable flexible and customizable user interfaces for presenting information and collecting user input in the form of dialogs.
+
+---
+
+<img
+  src="https://i.ibb.co/5Gp2d7b/image.png"
+  alt="Image"
+/>
+
+## Register Dialog
+
+Use the `RegisterDialog` function to create a customizable dialog for user interaction.
+
+```lua copy
+exports["LGF_Utility"]:RegisterDialog(dialogID, Title,EnableCam, Cards)
+```
+
+### Parameters
+
+- **`id`**: (string)  
+  A unique identifier for the dialog. This value must be a string and cannot be nil.
+
+- **`title`**: (string)  
+  The title of the dialog displayed at the top. This value is required.
+
+- **`enableCam`**: (boolean) _(optional)_  
+  Indicates whether to enable a custom camera when the dialog is opened. If set to `true`, the camera will be activated.
+
+- **`cards`**: (table)  
+  A table containing the details of the dialog cards. Each card should be a table with the following properties:
+
+  - **`title`**: (string)  
+    The title of the card. This value is required.
+
+  - **`message`**: (string)  
+    The message or description associated with the card. This value is required.
+
+  - **`actionLabel`**: (string|nil)  
+    The label for the action button. This value is optional.
+
+  - **`actionCloseLabel`**: (string|nil)  
+    The label for the close action button. This value is optional, with a default value of "Close".
+
+  - **`onAction`**: (function|nil)  
+    Function callback triggered when the action button is pressed. This value is optional.
+
+  - **`image`**: (string|nil)  
+    URL or path to an image to be displayed on the card. This value is optional.
+
+
+### Example of Registering a Dialog
+
+```lua copy
+function OpenDialogTest()
+    exports['LGF_Utility']:RegisterDialog({
+        id = 'dialogID', -- Unique identifier for the dialog
+        title = 'Dialog Title', -- Title of the dialog
+        enableCam = true, -- Optional: Enable custom camera
+        cards = {
+            {
+                title = 'Card Title 1', -- Title of the first card
+                message = 'Description or message for the first card.', -- Message associated with the first card
+                actionLabel = 'Action 1', -- Label for the action button
+                actionCloseLabel = 'Close Action 1', -- Optional: Label for the close action button
+                image = 'image_url_1', -- Optional: URL for the card's image
+                onAction = function() -- Optional: Action callback
+                    print('Action for Card 1 selected')
+                end,
+                onClose = function() -- Optional: Close action callback
+                    print('Card 1 closed')
+                end
+            },
+            {
+                title = 'Card Title 2', -- Title of the second card
+                message = 'Description or message for the second card.', -- Message associated with the second card
+                actionLabel = 'Action 2', -- Label for the action button
+                actionCloseLabel = 'Close Action 2', -- Optional: Label for the close action button
+                onAction = function() -- Optional: Action callback
+                    print('Action for Card 2 selected')
+                end,
+                onClose = function() -- Optional: Close action callback
+                    print('Card 2 closed')
+                end
+            },
+            -- Add more cards as needed
+        }
+    })
+end
+
+
+RegisterCommand("openDialog", function()
+    OpenDialogTest()
+end)
+```
+
+### Notes
+
+- The `RegisterDialog` function allows you to define cards with various options and messages.
+- Each `card` can have a selection function `(onSelect)` to handle the value selected by the user.
+- Dialogs can be used to collect information or simply to display messages to the user.
+
+## CloseDialog
+
+Use the `CloseDialog` function to close a specific dialog by its identifier.
+
+```lua copy
+exports["LGF_Utility"]:CloseDialog(dialogID)
+```
+
+### Parameters
+
+`dialogID`: (string) Unique identifier for the dialog to be closed (optional).
+
+## ShowDialog
+
+Use the `ShowDialog` function to display a specific dialog by its identifier.
+
+```lua copy
+exports["LGF_Utility"]:ShowDialog(dialogID)
+```
+
+### Parameters
+
+`dialogID`: Unique identifier for the dialog to be displayed (required).
+
+## GetDialogState
+
+Use the `GetDialogState` function to check if the dialog is currently open.
+
+```lua copy
+exports["LGF_Utility"]:GetDialogState()
+```
+
+### Return Value
+
+`state`: (boolean) Returns true if the dialog is currently open, and false if it is closed.
+
+## ForceCloseDialog
+
+Use the `ForceCloseDialog` function to forcefully close any open dialog.
+
+```lua copy
+exports["LGF_Utility"]:ForceCloseDialog()
+```

@@ -1,0 +1,86 @@
+# LGF Document System
+
+
+## Available Document Types
+
+- ID Card (`license_id`)
+- Driving License (`license_car`)
+- Weapon License (`license_weapon`)
+- Boat License (`license_boat`)
+
+## Features
+
+- **Job Restrictions**: Only specific jobs (like police) can create certain documents.
+- **Dynamic Zones**: Interaction points for document management.
+- **Customizable**: Add or modify document types via `Config.lua`.
+
+
+## Dependency
+
+- `ox_inventory`
+- `screenshot-basic` or `MugShotBase64`
+
+## Framework Supported
+
+- `ESX`
+- `QBOX`
+- `LegacyCore`
+
+## Installation
+
+1. **Clone the Resource or Donwload It**  
+   Add this resource to your `resources` directory in your FiveM server.
+
+2. **Add Items to ox_inventory**  
+   To add the documents as items that can be managed by players, modify the `items.lua` file in the `ox_inventory/data/items.lua` directory as follows:
+
+   ```lua copy
+   return {
+       ['license_id'] = {
+           label = 'ID Card',
+           weight = 100,
+           consume = 0,
+           description = 'Your Personal Document',
+           client = {
+               export = 'LGF_DocumentSystem.manageDocument'
+           }
+       },
+       ['license_car'] = {
+           label = 'Drive Card',
+           weight = 150,
+           consume = 0,
+           description = 'Your Driving License',
+           client = {
+               export = 'LGF_DocumentSystem.manageDocument'
+           }
+       },
+       ['license_weapon'] = {
+           label = 'Weapon License',
+           weight = 200,
+           consume = 0,
+           description = 'License to Carry Weapons',
+           client = {
+               export = 'LGF_DocumentSystem.manageDocument'
+           }
+       },
+       ['license_boat'] = {
+           label = 'License Boat',
+           weight = 120,
+           consume = 0,
+           description = 'License to Operate Boats',
+           client = {
+               export = 'LGF_DocumentSystem.manageDocument'
+           }
+       },
+   }
+   ```
+
+3. **Configure Documents and Zone in `Config.lua`**
+   Add your document types in the Config.lua file.
+
+4. **Add your Language `server.cfg`**
+   Ensure Language Files are Present: Make sure you have the necessary localization files. You should have a file named %s.json in the locales directory of your LGF_DocumentSystem.
+
+```lua copy
+setr LGF_DocumentSystem:GetLocales "it"
+```

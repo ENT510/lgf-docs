@@ -1,0 +1,11 @@
+{
+  "index": "Introduction",
+  "utility": "LGF Utility",
+  "docSystem": "LGF Document System",
+
+  "support": {
+    "title": "Support Team",
+    "type": "page",
+    "href": "#support-our-team"
+  }
+}

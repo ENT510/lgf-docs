@@ -1,0 +1,188 @@
+import { Steps, Tabs } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Common Replace
+
+This documentation covers the utility functions provided by the `LGF_Utility` module. Below you'll find descriptions of the exports available.
+
+Here you will find all the common usable substitutes.
+
+<Callout emoji="💡">
+  This documentation is intended for developers looking to interact with in-game
+  entities using `LGF_Utility`. Make sure to follow the examples closely for
+  best results.
+</Callout>
+
+## Entity Common
+
+### CreateEntityPed
+
+`CreateEntityPed` spawns a new pedestrian in the game world based on the provided data. This includes specifying the model, position, orientation and other properties of the pedestrian.
+
+```lua copy
+---@param data table
+---@field model string
+---@field position vector4
+---@field scenario string|nil
+---@field freeze boolean
+---@field isNetworked boolean
+---@field invincible boolean
+---@field blockingEvents boolean
+---@return PedEntity
+exports["LGF_Utility"]:CreateEntityPed(data)
+```
+
+### CreateEntityObject
+
+`CreateEntityObject` allows you to spawn a specific object in the game, such as a prop or any other static entity. You can define its model and where it should be placed in the game world.
+
+```lua copy
+---@param data table
+---@field model string
+---@field position vector3
+---@field isNetworked boolean
+---@field freeze boolean
+---@return ObjectEntity
+exports["LGF_Utility"]:CreateEntityObject(data)
+```
+
+### CreateEntityVehicle
+
+`CreateEntityVehicle` spawns a vehicle based on the specified data, including the model type, position,direction and other property. This is useful for creating drivable or static vehicles in the game environment.
+
+```lua copy
+---@param data table
+---@field model string
+---@field position vector4
+---@field isNetworked boolean
+---@field seatPed boolean
+---@field seat number
+---@field freeze boolean
+---@field onCreated function
+---@return VehicleEntity
+exports["LGF_Utility"]:CreateEntityVehicle(data)
+```
+
+### GetAllEntityPed
+
+`GetAllEntityPed` returns an array containing all pedestrian entities that have been created using the `CreateEntityPed` function. This can be useful for managing or iterating over all peds currently in the game.
+
+```lua copy
+---@return Coords | number
+---@return EntityHandle | number
+---@return EntityHash | string? | number
+---@return NetID | number
+---@return Created | boolean
+---@return PedEntity[]
+exports["LGF_Utility"]:GetAllEntityPed()
+```
+
+### GetAllEntityObjects
+
+`GetAllEntityObjects` provides an array of all objects created using the `CreateEntityObject` function. This is helpful for tracking or modifying objects in the game.
+
+```lua copy
+---@return Coords | number
+---@return EntityHandle | number
+---@return EntityHash | string? | number
+---@return NetID | number
+---@return Created | boolean
+---@return ObjectEntity[]
+
+exports["LGF_Utility"]:GetAllEntityObjects()
+```
+
+### GetAllEntityVehicles
+
+`GetAllEntityVehicles` returns an array of all vehicles that have been spawned using the `CreateEntityVehicle` function. You can use this to manage or interact with all vehicles in the game.
+
+```lua copy
+---@return Coords | number
+---@return EntityHandle | number
+---@return EntityHash | string? | number
+---@return NetID | number
+---@return Created | boolean
+---@return VehicleEntity[]
+exports["LGF_Utility"]:GetAllEntityVehicles()
+```
+
+<Callout type="warning" emoji="⚠️">
+  You will only get the entities registered by the common/function related to
+  `LGF_Utility`.
+</Callout>
+
+## Callback Common
+
+
+<Tabs items={['Server Callback', 'Client Callback']}>
+
+  <Tabs.Tab name="Server Callback">
+    <Callout emoji="💡">
+      Server callbacks handle interactions from the client side, allowing you to send requests and process responses on the server.
+    </Callout>
+
+  ### RegisterServerCallback
+
+    `RegisterServerCallback` allows you to register a callback function on the server that can be triggered by the client. This is useful for handling client requests and sending responses back to the client.
+
+    ```lua copy
+    ---@param name string
+    ---@param cbfunc function
+    exports["LGF_Utility"]:RegisterServerCallback(name, cbfunc)
+    ```
+
+    ### TriggerServerCallback
+
+    `TriggerServerCallback` is used to send a request from the client to the server and receive a response through a callback. This is useful for performing server-side operations and getting the results back on the client.
+
+    ```lua copy
+    ---@param name string
+    ---@param ... ?
+    ---@return value | string | string[] | table
+    exports["LGF_Utility"]:TriggerServerCallback(name, ...)
+    ```
+
+  </Tabs.Tab>
+
+  <Tabs.Tab name="Client Callback">
+    <Callout emoji="💡">
+      Client callbacks handle interactions from the server side, allowing you to register and trigger callbacks on the client.
+    </Callout>
+
+    ### RegisterClientCallback
+
+    `RegisterClientCallback` registers a callback function on the client side. This function can handle data processing requests and return results.
+
+    ```lua copy
+    ---@param name string
+    ---@param callback_function fun(...: any): any
+    exports["LGF_Utility"]:RegisterClientCallback(name, callback_function)
+    ```
+
+    ### TriggerClientCallback
+
+    `TriggerClientCallback` triggers a registered client callback and processes the result.
+
+    ```lua copy
+    ---@param name string
+    ---@param ... any
+    ---@return any
+    exports["LGF_Utility"]:TriggerClientCallback(name, ...)
+    ```
+
+  </Tabs.Tab>
+</Tabs>
+
+## Utility Common
+
+### RequestEntityModel
+
+`RequestEntityModel` requests and loads a model into memory, ensuring it is available for use in creating entities. The function checks if the model exists, and if it does, waits until the model is fully loaded or a timeout occurs
+
+```lua copy
+---@param model string
+---@param timeout number
+---@return cb boolean
+---@return model string
+exports["LGF_Utility"]:RequestEntityModel(model, timeout)
+```

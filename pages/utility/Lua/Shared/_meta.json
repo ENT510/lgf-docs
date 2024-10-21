@@ -1,0 +1,22 @@
+{
+  "Utils": {
+    "get_context": "Get Context",
+    "dependency": "Get Dependency",
+    "safe_await": "Safe Await"
+  },
+  "Modules": {
+    "lua_loader": "Lua Loader"
+  },
+  "Events": {
+    "callback": "Callback",
+    "event": "Event"
+  },
+  "Strings": {
+    "string": "String",
+    "math": "Math"
+  },
+  "Framework": {
+    "get_Object": "Get Object",
+    "bridge": "Bridge"
+  }
+}

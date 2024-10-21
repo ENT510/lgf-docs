@@ -1,0 +1,179 @@
+import { Tabs, Callout } from 'nextra/components'
+
+# Callback Documentation
+
+<Tabs items={['Server Callback', 'Client Callback']}>
+  <Tabs.Tab>
+    ## Registering a Server Callback
+
+    ```lua copy
+    ---@param callback_name string
+    ---@param callback_function fun(source: number): table
+    LGF:RegisterServerCallback(callback_name, callback_function)
+    ```
+
+    ### Description
+
+    `LGF:RegisterServerCallback()` registers a callback function on the server side. This function can be invoked from the client side, allowing the server to process requests and return data to the client.
+
+    ### Parameters
+
+    - **`callback_name`** (string): The name of the callback function used to identify and trigger it from the client side.
+    - **`callback_function`** (function): A function that takes `source` (the player's source ID) and returns a table with data to be sent back to the client.
+
+    ### Example
+
+    ```lua copy
+    local LGF = exports['LGF_Utility']:UtilityData()
+
+    -- Registering a server callback
+    LGF:RegisterServerCallback("FetchPlayerData", function(source)
+        return {
+            source = source,
+            playerName = GetPlayerName(source),
+            playerIdentifier = GetPlayerIdentifierByType(source, "license")
+        }
+    end)
+    ```
+
+    ## Triggering a Server Callback
+
+    ```lua copy
+    ---@param callback_name string
+    ---@return table | string[] | nil
+    LGF:TriggerServerCallback(callback_name)
+    ```
+
+    ### Description
+
+    `LGF:TriggerServerCallback()` triggers a registered server callback from the client side. This method sends a request to the server and returns the result of the server-side callback function.
+
+    ### Parameters
+
+    - **`callback_name`** (string): The name of the callback function to be triggered, as registered on the server side.
+
+    ### Returns
+
+    - **`table`**: The data returned by the server callback function. This can be a table, an array of strings, or `nil` depending on the callback implementation.
+
+    ### Example
+
+    ```lua copy
+    local LGF = exports['LGF_Utility']:UtilityData()
+
+    -- Triggering the server callback and receiving the response
+    local response = LGF:TriggerServerCallback("FetchPlayerData")
+
+    print(response)
+    ```
+
+    ### Notes
+
+    - Ensure the `callback_name` used in `LGF:TriggerServerCallback()` matches the name provided in `LGF:RegisterServerCallback()`.
+    - The structure of the returned data depends on the server-side callback implementation and may vary.
+  </Tabs.Tab>
+  <Tabs.Tab>
+
+    ## Registering a Client Callback
+
+    ```lua copy
+    ---@param callback_name string
+    ---@param callback_function fun(...: any): any
+    LGF:RegisterClientCallback(callback_name, callback_function)
+    ```
+
+    #### Description
+
+    `LGF:RegisterClientCallback()` registers a callback function on the client side that accepts parameters. This function can be triggered from the client side, allowing it to process the provided parameters and return a result.
+
+    #### Parameters
+
+    - **`callback_name`** (string): The name of the callback function used to identify and trigger it from the client side.
+    - **`callback_function`** (function): A function that takes any number of parameters and returns a result.
+
+    #### Example
+
+    ```lua copy
+    local LGF = exports['LGF_Utility']:UtilityData()
+
+    -- Registering a client callback that processes parameters
+    LGF:RegisterClientCallback('processPlayerData', function(playerId, additionalInfo)
+        -- Example logic for processing player data
+        local playerData = {
+            id = playerId,
+            name = GetPlayerName(playerId),
+            info = additionalInfo
+        }
+        return playerData
+    end)
+    ```
+
+    ## Triggering a Client Callback
+
+    ```lua copy
+    ---@param callback_name string
+    ---@param ... any
+    ---@return any
+    LGF:TriggerClientCallback(callback_name, ...)
+    ```
+
+    #### Description
+
+    `LGF:TriggerClientCallback()` triggers a registered client callback from the client side, passing any parameters required by the callback function.
+
+    #### Parameters
+
+    - **`callback_name`** (string): The name of the callback function to be triggered, as registered on the client side.
+    - **`...`** (any): Any additional parameters to pass to the callback function.
+
+    #### Returns
+
+    - **`any`**: The result returned by the client callback function.
+
+    #### Example
+
+    ```lua copy
+    local LGF = exports['LGF_Utility']:UtilityData()
+
+    -- Triggering the client callback with parameters
+    local playerId = PlayerId()
+    local additionalInfo = "Extra Data"
+    local result = LGF:TriggerClientCallback('processPlayerData', playerId, additionalInfo)
+
+    print('Player Data:', json.encode(result))
+    ```
+
+    ## Registering and Triggering a Callback Without Parameters
+
+    `LGF:RegisterClientCallback()` can also register callbacks that do not require parameters. This is useful for simpler callbacks that return a fixed or static result.
+
+    #### Example
+
+    ```lua copy
+    local LGF = exports['LGF_Utility']:UtilityData()
+
+    -- Registering a client callback that returns a static message
+    LGF:RegisterClientCallback('getStatusMessage', function()
+        return {
+            success = true,
+            message = "Client is operational."
+        }
+    end)
+    ```
+
+    #### Example
+
+    ```lua copy
+    local LGF = exports['LGF_Utility']:UtilityData()
+
+    -- Triggering the client callback without parameters
+    local response = LGF:TriggerClientCallback('getStatusMessage')
+
+    print('Status Message:', json.encode(response))
+    ```
+
+    ### Notes
+
+    - Ensure the `callback_name` used in `LGF:TriggerClientCallback()` matches the name provided in `LGF:RegisterClientCallback()`.
+  </Tabs.Tab>
+</Tabs>

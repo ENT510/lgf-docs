@@ -1,0 +1,125 @@
+import { Callout, Tabs } from "nextra/components";
+
+# Text UI
+
+Manage `Text UI` elements in your application using client-side methods. This documentation outlines how to handle Text UI effectively.
+
+---
+
+<img
+  src="https://i.ibb.co/5r4Jzmq/imag21e.png"
+  alt="Image"
+/>
+
+---
+
+<img
+  src="https://i.ibb.co/RyR2TkT/image2121.png"
+  alt="Image"
+/>
+
+
+<Callout type="warning" emoji="⚠️">
+  **Note:** Interact whit Textui Require a 0 thick loop
+</Callout>
+
+## OpenTextUI
+
+- Use the exports `OpenTextUI` function to display a Text UI element:
+
+```lua copy
+exports["LGF_Utility"]:OpenTextUI(data)
+```
+
+The `TextUIData` table data for displaying the Text UI should contain the following fields:
+
+- `title`: (string) The title of the Text UI (optional).
+- `message`: (string) The message to display (required).
+- `colorProgress`: (string) The color of the loader (optional).
+- `keyBind`: (string) The keybind to display (optional; shown only if `useKeybind` is true).
+- `position`: (string) The position of the Text UI (default is "center-right").
+- `useKeybind`: (boolean) Whether to show the keybind (optional).
+- `useProgress`: (boolean) Whether to show the loader (optional).
+
+#### Example Usage
+
+```lua copy
+exports["LGF_Utility"]:OpenTextUI({
+    title = "Information",  -- Optional title for the Text UI
+    message = "Loading data, please wait...",
+    colorProgress = "rgba(54, 156, 129, 0.381)",
+    keyBind = "F",  -- Optional keybind to display
+    position = "center-right",  -- Position of the Text UI
+    useKeybind = true,  -- Show the keybind (optional)
+    useProgress = false   -- Show the loader (optional)
+})
+```
+
+## DisableTextUI
+
+Use the exports `CloseTextUI` function to hide the Text UI element:
+
+```lua copy
+exports["LGF_Utility"]:CloseTextUI()
+```
+
+#### Example Usage
+
+```lua copy
+if exports["LGF_Utility"]:GetStateTextUI() then
+    exports["LGF_Utility"]:CloseTextUI()
+end
+```
+
+## GetStateTextUI
+
+Use the exports `GetStateTextUI` function to check if the Text UI is currently open:
+
+<Tabs items={['Exports', 'StateBag']}>
+  <Tabs.Tab label="Exports">
+    ```lua
+    exports["LGF_Utility"]:GetStateTextUI()
+    ```
+
+    ### Return Value:
+
+    - `state`: (boolean) Returns `true` if the Text UI is currently open, and `false` if it is closed.
+
+  </Tabs.Tab>
+  
+  <Tabs.Tab label="StateBag">
+    ```lua
+    LocalPlayer.state.textUiOpen
+    ```
+
+    ### Return Value:
+
+    - `state`: (boolean) Returns `true` if the Text UI is currently open, and `false` if it is closed.
+
+  </Tabs.Tab>
+</Tabs>
+
+### Example Usage
+<Tabs items={['Exports Usage', 'StateBag Usage']}>
+  <Tabs.Tab label="Exports Usage">
+    ```lua
+    local isOpen = exports["LGF_Utility"]:GetStateTextUI()
+    if isOpen then
+        print("TextUI is open")
+    else
+        print("TextUI is closed")
+    end
+    ```
+  </Tabs.Tab>
+  
+  <Tabs.Tab label="StateBag Usage">
+    ```lua
+    local isOpen = LocalPlayer.state.textUiOpen
+    if isOpen then
+        print("TextUI is open")
+    else
+        print("TextUI is closed")
+    end
+    ```
+  </Tabs.Tab>
+</Tabs>

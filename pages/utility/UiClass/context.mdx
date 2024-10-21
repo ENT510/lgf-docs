@@ -1,0 +1,210 @@
+# Context Menu Creation
+
+Context Menus allow users to interact with in-game elements by displaying a set of options. Each option can trigger specific actions, display information, or provide visual feedback such as progress indicators.
+
+---
+<div style={{ display: 'flex', justifyContent: 'center' }}>
+  <img 
+    src="https://i.ibb.co/3TVWVnW/image2.png" 
+    alt="Image 1"
+    style={{ height: '400px', width: "380px" ,marginRight: '30px' }}
+  />
+  <img 
+    src="https://i.ibb.co/n1vRrsY/image1.png" 
+    alt="Image 2"
+    style={{ height: '400px', width: "350px"}}
+  />
+</div>
+
+## RegisterContextMenu
+
+The `RegisterContextMenu` registers a new context menu with a unique ID and a set of options.
+
+```lua copy
+exports['LGF_Utility']:RegisterContextMenu(menuId, title, options)
+```
+
+- **`menuId`**: A string representing the unique identifier for this context menu.
+- **`title`**: The title displayed at the top of the context menu.
+- **`options`**: A table containing the options for the menu. Each option can contain the following fields:
+  - **`label`**: (String) The visible name of the option.
+  - **`description`**: (String) A short description of the option.
+  - **`icon`**: (String) The icon for the option (optional, e.g., 'car', 'arrow-up').
+  - **`onSelect`**: (Function) A function to be called when the option is selected.
+  - **`disabled`**: (Boolean) Indicates whether the option is disabled (optional, default is `false`).
+  - **`progress`**: (Number) A value between 0 and 100 representing the horizontal progress bar (optional).
+  - **`ringProgress`**: (Number) A value representing the circular progress bar (optional).
+  - **`colorProgress`**: (String) The color of the progress bar or ring (optional, e.g., 'green', 'red').
+  - **`labelButton`**: (String) The label for the button associated with the option.
+  - **`metadata`**: (Table) Additional data associated with the option, which may include:
+    - **`title`**: (String) The title for the metadata.
+    - **`iconTitle`**: (String) The icon associated with the metadata title.
+    - **`metadataValue`**: (Table) Additional key-value pairs for detailed information.
+  - **`map`**: (Table) Optional parameter to define map markers related to the context menu. This table can contain:
+    - **`markers`**: (Table) An array of marker objects, where each marker can include:
+      - **`position`**: (Table) The coordinates of the marker (e.g., `{ x = 123, y = 456 }`).
+      - **`popupText`**: (String) The text to display when hovering over the marker.
+      - **`icon`**: (String) The URL of the icon to display for the marker.
+
+## ShowContextMenu
+
+The `ShowContextMenu` displays or hides the context menu with the specified ID.
+
+```lua copy
+exports['LGF_Utility']:ShowContextMenu(menuId, show)
+```
+
+- `menuId`: The ID of the context menu to be shown.
+- `show`: A boolean value (true to show the menu, false to hide it).
+
+#### Registering a Basic Context Menu
+
+- The following example demonstrates how to create a simple context menu with a few selectable options:
+
+```lua copy
+function OpenExampleMenu()
+    local PlayerCoords = LGF.Player:Ped()
+    local MyCoords = { PlayerCoords.x, PlayerCoords.y }
+    local options = {
+        {
+            label = "Option 1",
+            description = "This is the first option.",
+            icon = "star",
+            onSelect = function()
+                print("Option 1 selected")
+            end
+        },
+        {
+            label = "Option 2",
+            description = "This option is disabled.",
+            icon = "ban",
+            disabled = true
+        },
+        {
+            label = "Progress Example",
+            description = "Shows a progress bar.",
+            icon = "chart-line",
+            progress = 75,  -- 75% filled horizontal progress bar
+            colorProgress = "blue"
+        },
+        {
+            label = "Ring Progress Example",
+            description = "Shows a circular progress bar.",
+            icon = "circle-notch",
+            ringProgress = 50,  -- 50% filled circular progress bar
+            colorProgress = "green"
+        },
+        {
+            label = "View on Map",
+            description = "See your location on the map.",
+            icon = "map",
+            map = {
+                markers = {
+                    { position = MyCoords , popupText = "Your Location", icon = "https://example.com/marker.png" },
+                    { position = { 10, 10 }, popupText = "Point of Interest", icon = "https://example.com/poi.png" }
+                }
+            }
+        }
+    }
+
+    -- Register and display the context menu
+    exports['LGF_Utility']:RegisterContextMenu("example_menu", "Example Menu", options)
+    exports['LGF_Utility']:ShowContextMenu("example_menu", true)
+end
+
+```
+
+#### Registering a Context Menu with Metadata
+
+- Some options may also include metadata to display additional details. Here's how to add metadata to options:
+
+```lua copy
+function OpenDetailedMenu()
+    local options = {
+        {
+            label = "Vehicle Info",
+            description = "Details about the selected vehicle.",
+            icon = "car",
+            metadata = {
+                title = "Vehicle Details",
+                metadataValue = {
+                    Speed = "200 km/h",
+                    Fuel = "50%"
+                }
+            },
+            onSelect = function()
+                print("Vehicle Info selected")
+            end
+        }
+    }
+
+    exports['LGF_Utility']:RegisterContextMenu("detailed_menu", "Vehicle Menu", options)
+    exports['LGF_Utility']:ShowContextMenu("detailed_menu", true)
+end
+```
+
+## CanOpenContext
+
+The `CanOpenContext` checks if the context menu can be opened at the current moment. It returns a boolean value indicating whether the context menu is allowed to be displayed based on certain conditions defined in the utility.
+
+```lua copy
+exports['LGF_Utility']:CanOpenContext()
+```
+
+- **Returns**: (Boolean)
+  - `true`: The context menu can be opened.
+  - `false`: The context menu cannot be opened.
+
+#### Usage Example
+
+You can use this method to determine whether to show the context menu or not:
+
+```lua copy
+if exports['LGF_Utility']:CanOpenContext() then
+    -- Proceed to show the context menu
+    exports['LGF_Utility']:ShowContextMenu('main_menu', true)
+else
+    -- Handle the case when the context menu cannot be opened
+    print("Context menu cannot be opened at this time.")
+end
+```
+
+## GetContextState
+
+The `GetContextState` returns a boolean value indicating whether the context menu is opened or not .
+
+- **Returns**: (Boolean)
+  - `true`: The context menu is opened.
+  - `false`: The context menu is not opened.
+
+#### Usage Example
+
+```lua copy
+if exports['LGF_Utility']:GetContextState() then
+    print("Context is currently open.")
+else
+    print("Context is not currently open")
+end
+```
+
+## CloseContext
+
+Closes the context menu identified by `menuID`.
+
+- `menuID` (String): The unique identifier for the context menu to close.
+
+#### Usage Example
+
+```lua copy
+exports['LGF_Utility']:CloseContext("example_menu")
+```
+
+## ForceCloseContext
+
+Forces the closure of the currently open context menu.
+
+#### Usage Example
+
+```lua copy
+exports['LGF_Utility']:ForceCloseContext()
+```

@@ -1,0 +1,36 @@
+import { Callout } from "nextra/components";
+
+<Callout type="info" emoji="ℹ️">
+  You have the option to add Custom Frameworks by following the examples in
+  init.lua.
+</Callout>
+
+# Get Framework
+
+```lua copy
+---@return func(export core)
+LGF:GetFramework()
+```
+
+### Description
+
+`LGF:GetFramework()` verifies the specific Framework runned, and Return the current Export Object.
+
+#### Example
+
+```lua copy
+if LGF:GetContext() == "server" then
+    local ESX = LGF:GetFramework()
+    local xPlayer = ESX.GetPlayerFromId(1)
+    print("xPlayer Data %s"):format(xPlayer)
+end
+```
+
+#### With Field
+
+```lua copy
+if LGF:GetContext() == "server" then
+    local xPlayer = LGF:GetFramework().GetPlayerFromId(1)
+    print("xPlayer Identifier %s"):format(xPlayer.identifier)
+end
+```

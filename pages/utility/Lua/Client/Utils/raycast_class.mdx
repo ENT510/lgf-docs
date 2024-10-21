@@ -1,0 +1,86 @@
+import { Callout } from "nextra/components";
+
+# Raycast Class
+
+The `LGF.RaycastHandler` module provides methods for performing raycasts and identifying nearby players. These functions are useful for interacting with the game environment and selecting entities or players.
+
+```lua
+---@module
+LGF.RaycastHandler
+```
+
+<Callout type="warning" emoji="⚠️">
+  **Note:** Each interaction involving the raycast requires a loop with a 0 Thickness, to ensure continuous updates and responsiveness within the game environment.
+</Callout>
+
+
+
+### LGF.RaycastHandler:performRaycast
+
+- This function conducts a `raycast` originating from the player's current `position`, projecting in the direction the player is `facing`. It determines if the ray intersects with any `entities` within a specified `maximum distance`, allowing for interactions with the game `environment`.
+
+```lua copy
+---@param maxDistance number The maximum distance to which the ray should extend.
+---@param drawMarker boolean Whether to draw a marker at the hit location.
+---@param drawLine boolean Whether to draw a line to the hit location.
+---@return boolean hit Whether the ray hit an entity.
+---@return entity entity The entity that was hit, if any.
+---@return table hitCoordinates The coordinates of the hit point {x, y, z}.
+---@return table surfaceNormal The normal of the surface at the hit point {x, y, z}.
+LGF.RaycastHandler:performRaycast(maxDistance, drawMarker, drawLine)
+```
+
+### Example Usage
+
+```lua copy
+CreateThread(function()
+    while true do
+        Wait(0) -- Required (0 thick)
+        -- Perform a raycast with a maximum distance of 50 units
+        local hit, entityHit, hitcoords, surfaceNormal = LGF.RaycastHandler:performRaycast(50.0, true, true)
+
+        if hit then
+            print("Hit Entity:", entityHit)
+            print("Hit Coordinates:", hitcoords)
+            print("Surface Normal:", surfaceNormal)
+        else
+            print("No entity hit. Coordinates of raycast destination:", hitcoords)
+        end
+    end
+end)
+```
+
+### LGF.RaycastHandler:performTargetPlayer
+
+- This function locates the `nearest player` within a defined `radius`. If the raycast successfully hits the targeted player, a `visual marker` is displayed above their `head`, facilitating easy `identification` and `interaction` with that player in the game `world`.
+
+
+```lua copy
+---@param distanceMax number The maximum distance to search for players.
+---@param markerType number The type of marker to draw above the targeted player's head.
+---@param drawLine boolean Whether to draw a line to the targeted player.
+---@return table|nil coordinates The coordinates of the targeted player {x, y, z}, or nil if no player is found.
+---@return entity|nil closestPlayer The entity of the closest player, or nil if no player is found.
+---@return number|nil playerId The server ID of the targeted player, or nil if no player is found.
+LGF.RaycastHandler:performTargetPlayer(distanceMax,markerType, drawLine)
+```
+
+### Example Usage
+
+```lua copy
+CreateThread(function()
+    while true do
+        Wait(0) -- Required (0 thick)
+         -- Perform targeting of the closest player within a maximum distance of 20 units
+        local coords, entity, playerId = LGF.RaycastHandler:performTargetPlayer(20.0, 2, true)
+
+        if coords then
+            print("Targeted Player ID:", playerId)
+            print("Coordinates of Targeted Player:", coords)
+            print("Entity of Targeted Player:", entity)
+        else
+            print("No player within range.")
+        end
+    end
+end)
+```

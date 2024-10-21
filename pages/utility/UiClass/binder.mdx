@@ -1,0 +1,123 @@
+import { Callout } from "nextra/components";
+import { Tabs } from "nextra/components";
+
+# Interaction
+
+The Interaction system allows developers to create instructional buttons and manage key bindings for user interactions. It provides a flexible way to present on-screen controls and customize their behavior for seamless in-game interaction.
+
+---
+
+<img src="https://i.ibb.co/k6ft1TP/image.png" alt="Image" />
+
+## OpenControlInstructional
+
+Use the `interactionButton` function to display instructional buttons on the user interface.
+
+```lua copy
+exports.LGF_Utility:interactionButton(data)
+```
+
+
+### Example Usage
+
+```lua copy
+exports.LGF_Utility:interactionButton({
+    Visible = true,
+    Controls = {
+        { key = "A", indexKey = 34, label = "Action 1", description = "Press A for Action 1." },
+        { key = "S", indexKey = 31, label = "Action 2", description = "Press S for Action 2." },
+        { key = "D", indexKey = 9, label = "Action 3", description = "Press D for Action 3." },
+        { key = "F", indexKey = 23, label = "Action 4", description = "Press F for Action 4." },
+        { isMouse = true, key = "Left Click", indexKey = 69, label = "Place Object", description = "Use Left Click to place the object." }
+    },
+    Schema = {
+        Styles = {
+            BackgroundColor     = "#1e1e1e",
+            BackgroundBindColor = "#ff5722",
+            FontColor           = "#ffffff",
+            Position            = "bottom",
+            Animation           = "slide-down",
+        },
+    },
+    onBindPressed = function(keyBind)
+        print("Pressed: " .. keyBind)
+    end,
+    onBindReleased = function(keyBind)
+        print("Released: " .. keyBind)
+    end
+})
+```
+
+### Parameters
+
+- **`Visible`**: (boolean)  
+  Indicates whether the instructional buttons should be visible on screen.
+
+- **`Controls`**: (table)  
+  A table containing a list of control objects. Each control object must include the following fields:
+
+  - **`key`**: (string)  
+    The key or button to display on the screen (e.g., "A", "S", "Left Click").
+
+  - **`indexKey`**: (number)  
+    The key index used by the system to recognize the control.
+
+  - **`label`**: (string)  
+    The label associated with the control, describing the action (e.g., "Action 1", "Action 2").
+
+  - **`description`**: (string) _(optional)_  
+    Additional description for the control that explains its function in more detail.
+
+  - **`isMouse`**: (boolean) _(optional)_  
+    Set to `true` if the control represents a mouse action (e.g., "Left Click").
+
+- **`Schema`**: (table) _(optional)_  
+  Custom styling options for the instructional buttons, including:
+
+  - **`Styles`**: (table)
+    - **`BackgroundColor`**: (string) The background color of the instructional buttons.
+    - **`BackgroundBindColor`**: (string) The background color of the key binding display.
+    - **`FontColor`**: (string) The color of the text in the buttons.
+    - **`Position`**: (string) Position of the instructional buttons on the screen (`"bottom"`, `"top"`, etc.).
+    - **`Animation`**: (string) Animation style for the instructional buttons (e.g., `"slide-down"`).
+
+- **`onBindPressed`**: (function)  
+  Callback function triggered when a key is pressed. It receives the `keyBind` as an argument.
+
+- **`onBindReleased`**: (function)  
+  Callback function triggered when a key is released. It receives the `keyBind` as an argument.
+
+## CloseControlInstructional
+
+Use the `CloseControlInstructional` function to close the instructional button interface.
+
+```lua copy
+exports.LGF_Utility:CloseControlInstructional()
+```
+
+## GetStateInteraction
+
+Use the `GetStateInteraction` function to check if the instructional buttons are currently open.
+
+<Tabs items={['Exports', 'StateBag']}>
+  <Tabs.Tab label="Exports">
+    Use the `getStateInteraction` export to retrieve the current state.
+    ```lua copy
+    exports.LGF_Utility:getStateInteraction()
+    ```
+  </Tabs.Tab>
+
+  <Tabs.Tab label="StateBag">
+    You can also directly access the StateBag property to check if the instructional buttons are open.
+
+    ```lua copy
+    LocalPlayer.state.instructOpened
+    ```
+
+  </Tabs.Tab>
+</Tabs>
+
+### Return Value
+
+- `state`: (boolean)
+  Returns `true` if the instructional buttons are open, and `false` if they are closed.

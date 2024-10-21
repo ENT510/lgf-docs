@@ -1,0 +1,46 @@
+# Player Class
+
+The `LGF.Player` module provides a set of methods for retrieving player information. The available methods are only usable in the client context.
+
+```lua copy
+---@module 
+LGF.Player
+```
+
+## Available Methods
+
+### LGF.Player:Ped
+
+```lua copy
+---@return number
+LGF.Player:Ped()
+```
+- Returns the `Entity Handle` of the current player.
+
+### LGF.Player:Index
+
+```lua copy
+---@return number
+LGF.Player:Index()
+```
+
+- Returns the `server ID` of the current player. This is obtained using the player's Ped ID.
+
+### LGF.Player:PlayerId
+
+```lua copy
+---@return number
+LGF.Player:PlayerId()
+```
+
+- Returns the `player ID` of the current player. This ID is used to uniquely identify the player in the game.
+
+
+### LGF.Player:Coords
+
+```lua copy
+---@return table
+LGF.Player:Coords()
+```
+
+- Returns the `coordinates` of the current player’s Ped. The coordinates are returned as a table with `x`, `y`, and `z` values.

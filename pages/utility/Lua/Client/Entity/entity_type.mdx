@@ -1,0 +1,164 @@
+import { Callout } from "nextra/components";
+
+# Entity Documentation
+
+This documentation outlines how to obtain entities within the game environment.
+
+## Returned Table Structure
+
+When you retrieve entities using the provided functions, each entry in the returned table contains the following fields:
+
+- **EntityID** (number): The unique identifier for the entity.
+- **EntityHash** (number): The hash of the model used for the entity.
+- **netid** (number): The network ID of the entity.
+- **coords** (vector): The coordinates where the entity was created.
+
+<Callout type="warning" emoji="⚠️">
+  **Note:** This structure is returned only for retrieval functions example `LGF:GetAllEntityObjects()`.
+</Callout>
+
+## LGF:CreateEntityPed
+
+This function allows you to create a pedestrian entity registered with prefix parameters.
+
+### Parameters
+
+- `data` (table):
+  - `model` (string): The model name of the pedestrian.
+  - `position` (vector3): The spawn position of the pedestrian.
+  - `scenario` (string, optional): The scenario the pedestrian will perform.
+  - `freeze` (boolean, optional): If true, the pedestrian's position will be frozen.
+  - `isNetworked` (boolean, optional): If true, the pedestrian is networked.
+  - `invincible` (boolean, optional): If true, the pedestrian is invincible.
+  - `blockingEvents` (boolean, optional): If true, blocking events for the pedestrian are enabled.
+
+### Returns
+
+- `createdPed` (entity): The created pedestrian entity.
+
+### Example Usage
+
+```lua copy
+local newPed = LGF:CreateEntityPed({
+    model = "a_m_m_skater_01",
+    position = vector3(100.0, 100.0, 30.0),
+    scenario = "WORLD_HUMAN_MOBILE_FILM_SHOCKING",
+    freeze = false,
+    isNetworked = true,
+    invincible = true,
+    blockingEvents = false
+})
+```
+
+## LGF:CreateEntityObject
+
+Creates an object entity.
+
+### Parameters
+
+- `data` (table):
+  - `model` (string): The model name of the object.
+  - `position` (vector3): The spawn position of the object.
+  - `isNetworked` (boolean, optional): If true, the object is networked.
+  - `freeze` (boolean, optional): If true, the object's position will be frozen.
+
+### Returns
+
+- `createdObject` (entity): The created object entity.
+
+### Example Usage
+
+```lua copy
+local newObject = LGF:CreateEntityObject({
+    model = "prop_wooden_plank",
+    position = vector3(200.0, 200.0, 30.0),
+    isNetworked = true,
+    freeze = true
+})
+```
+
+## LGF:CreateEntityVehicle
+
+Creates a vehicle entity.
+
+### Parameters
+
+- `data` (table):
+  - `model` (string): The model name of the vehicle.
+  - `position` (vector3): The spawn position of the vehicle.
+  - `isNetworked` (boolean, optional): If true, the vehicle is networked.
+  - `seatPed` (boolean, optional): If true, the player will be placed in the specified seat.
+  - `seat` (number, optional): The seat index where the player will be placed (default is -1, which is the driver seat).
+  - `freeze` (boolean, optional): If true, the vehicle's position will be frozen.
+  - `onCreated` (function, optional): A callback function that will be called once the vehicle is created.
+
+### Returns
+
+- `createdVehicle` (entity): The created vehicle entity.
+
+### Example Usage
+
+```lua copy
+local newVehicle = LGF:CreateEntityVehicle({
+    model = "adder",
+    position = vector3(250.0, 250.0, 30.0),
+    isNetworked = true,
+    seatPed = true,
+    seat = -1,
+    freeze = false,
+    onCreated = function(vehicle)
+        print("Vehicle created with ID:", vehicle)
+    end
+})
+```
+
+## LGF:GetAllEntityPed
+
+Retrieves all pedestrian entities that have been created.
+
+### Returns
+
+- `peds` (table): A table containing data about all created pedestrian entities.
+
+### Example Usage
+
+```lua copy
+local allPeds = LGF:GetAllEntityPed()
+for _, ped in ipairs(allPeds) do
+    print("Pedestrian ID:", ped.EntityID)
+end
+```
+
+## LGF:GetAllEntityObjects
+
+Retrieves all object entities that have been created.
+
+### Returns
+
+- `objects` (table): A table containing data about all created object entities.
+
+### Example Usage
+
+```lua copy
+local allObjects = LGF:GetAllEntityObjects()
+for _, object in ipairs(allObjects) do
+    print("Object ID:", object.EntityID)
+end
+```
+
+## LGF:GetAllEntityVehicles
+
+Retrieves all vehicle entities that have been created.
+
+### Returns
+
+- `vehicles` (table): A table containing data about all created vehicle entities.
+
+### Example Usage
+
+```lua copy
+local allVehicles = LGF:GetAllEntityVehicles()
+for _, vehicle in ipairs(allVehicles) do
+    print("Vehicle ID:", vehicle.EntityID)
+end
+```

@@ -1,0 +1,62 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Event
+
+### LGF TriggerClientEvent
+
+```lua copy
+---@param eventName string
+---@param playerId number
+---@param ... any
+---@return boolean, string?
+LGF:TriggerClientEvent(eventName, playerId, ...)
+```
+
+`LGF:TriggerClientEvent` triggers a specified client event for a given player ID, passing optional arguments to the event. The function validates the `eventName` and `playerId`, encodes the arguments if necessary, and attempts to send the event to the client.
+
+## Parameters
+
+- **eventName** (`string`): The name of the event to be triggered. It must be a non-empty string.
+
+- **playerId** (`number`): The ID of the player who will receive the event. It must be a number.
+
+- **...** (`vararg`): The arguments to be passed with the event. Can be any Lua data type. If a single argument is provided, it is encoded as a JSON string; otherwise, all arguments are encoded as a JSON array.
+
+## Returns
+
+- **boolean**: `true` if the event was successfully triggered; `false` if there was an error.
+
+- **string?**: An error message if the operation fails.
+
+## Example
+
+**Client-side**
+
+```lua copy
+RegisterNetEvent("eventName", function(data)
+    print("Event received:",data)
+end)
+```
+
+**Server-side**
+
+```lua copy
+local function sendEvent(source)
+    local success, errorMsg = LGF:TriggerClientEvent("eventName", source, "Ue forza juve")
+
+    if not success then
+        print("Error sending event: " .. (errorMsg))
+    end
+end
+
+RegisterCommand('test', function(source)
+    sendEvent(source)
+end)
+```
+
+## Notes
+
+- Ensure that the `eventName` used in `LGF:TriggerClientEvent` matches the event name registered on the client side.
+
+- The `playerId` must be a valid player ID; otherwise, the function will return an error.

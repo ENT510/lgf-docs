@@ -1,0 +1,59 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Safe Await
+
+`LGF:SafeAsyncWait()` helps manage delayed tasks in Lua scripts without blocking other operations. It ensures that functions are executed after a specified delay and includes error handling to keep your script running smoothly even if issues arise. In the example, it schedules the generation and printing of random strings at intervals, demonstrating how to use this function effectively in asynchronous scenarios.
+
+```lua copy
+---@param delay number 
+---@param func 
+---@return boolean | string
+LGF:SafeAsyncWait(timeout, cb)
+```
+
+### Parameters
+
+
+- `delay`: The number of milliseconds to wait before executing the provided function.
+- `func`: The function to execute after the delay.
+
+### Returns
+
+`boolean`: Returns true if the function executed successfully without errors.
+`string`: If the function encounters an error, it returns false along with an error message indicating what went wrong.
+
+### Example
+
+<Callout emoji="💡">
+Keep in mind that the function used in the example is asynchronous and relies on `LGF:SafeAsyncWait`. If an error occurs, it will be handled and returned by `LGF:RandStr()` itself. `LGF:SafeAsyncWait` ensures that the function execution is managed properly, but any errors within LGF:RandStr() will be reported by that function directly. 
+</Callout>
+
+
+
+```lua copy
+local LGF = exports['LGF_Utility']:UtilityData()
+
+for i = 1, 5 do
+    LGF:SafeAsyncWait(1000, function()
+        local randomString = LGF:RandStr(5, "aln")
+        print(("Indx: %s, Value String: %s"):format(i, randomString))
+    end)
+end
+```
+
+#### Loop and Delay:
+
+- The for loop iterates from 1 to 5, scheduling a new asynchronous task in each iteration.
+- `LGF:SafeAsyncWait(1000, ...)` is called in each iteration, which means the function provided will execute 1 second after being scheduled.
+
+#### Function Execution:
+
+- Inside the provided function, `LGF:RandStr(5, "aln")` generates a random string of length 5 using alphanumeric characters.
+- `print(("Index: %d, Value String: %s"):format(i, randomString))` prints the index of the iteration and the generated random string.
+
+
+#### Return Values:
+
+Returns true if the delay and function execution complete without issues.
+If an error occurs within the function, `LGF:SafeAsyncWait()` will return false along with an error message.

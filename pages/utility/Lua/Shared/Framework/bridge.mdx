@@ -1,0 +1,145 @@
+import { Callout, Tabs } from "nextra/components";
+
+# Bridge Framework
+
+```lua copy
+---@module[]
+LGF.Core
+```
+
+The `LGF.Core` module provides utility functions for interacting with player data based on the current framework used by the application. The supported frameworks include `LEGACYCORE`, `es_extended`, and `qbx_core`.
+
+## Bridge Common
+
+## LGF.Core:GetPlayer
+
+<Tabs items={["Client", "Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param any 
+    local playerData = LGF.Core:GetPlayer() 
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param source 
+    local playerData = LGF.Core:GetPlayer(source)
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+#### Returns
+
+- Returns the `PlayerData` based on the current framework.
+
+## LGF.Core:GetJob
+
+```lua copy
+local job = LGF.Core:GetJob()
+```
+
+#### Returns
+
+- Returns the `job Name` of the player.
+
+## LGF.Core:GetName
+
+```lua copy
+local name = LGF.Core:GetName()
+```
+
+#### Returns
+
+- Return the `full name` of the player.
+
+## LGF.Core:PlayerLoaded
+
+```lua copy
+local isLoaded = LGF.Core:PlayerLoaded()
+```
+
+#### Returns
+
+- Returns `true` if player is loaded otherwhise `false` .
+
+## LGF.Core:GetGender
+
+```lua copy
+local gender = LGF.Core:GetGender()
+```
+
+#### Returns
+
+- Returns the `gender` of the player.
+
+## LGF.Core:GetIdentifier
+
+<Tabs items={["Client", "Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy ---@param any local identifier = LGF.Core:GetIdentifier() ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```lua copy ---@param source local identifier =
+    LGF.Core:GetIdentifier(source) ```
+  </Tabs.Tab>
+</Tabs>
+
+#### Returns
+
+- Return the `identifier` of the player.
+
+## LGF.Core:GetGroup
+
+<Tabs items={["Client", "Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy ---@param any local playerGroup = LGF.Core:GetGroup() ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```lua copy ---@param source local playerGroup = LGF.Core:GetGroup(source)
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+#### Returns
+
+- Returns the current `group` of the player.
+
+## Framework Events
+
+## LGF_Utility:PlayerLoaded
+
+**Description**:  
+The `LGF_Utility:PlayerLoaded` event is triggered when a player successfully loads into the game. This indicates that the player's data has been initialized and is ready for interaction. The event returns all parameters relevant to the player, which may vary depending on the framework being used (e.g., `LEGACYCORE`, `es_extended`, or `qbx_core`).
+
+**Parameters**:  
+The event can accept any number of parameters. The content of these parameters will depend on the specific framework detected at runtime. For instance:
+
+- **LEGACYCORE**: `slot`, `playerdata`,`newPlayer`.
+- **es_extended**: Could return `xPlayer`, `isNew`, `skin` provided by the framework.
+- **qbx_core** or **qb-core**: May provide custom player data relevant to those frameworks.
+
+### Example Usage
+
+```lua copy
+AddEventHandler("LGF_Utility:PlayerLoaded", function(...)
+    local FrameworkParams = {...} -- Collect all parameters into a table
+    print("Player loaded with FrameworkParams: ", json.encode(FrameworkParams))
+    -- Initialize player state or update the user interface here
+end)
+```
+
+## LGF_Utility:PlayerUnloaded
+
+**Description**:  
+The `LGF_Utility:PlayerUnloaded` event is triggered when a player logs out or disconnects from the game. This allows for necessary cleanup and state management related to the player's departure. The event does not return any parameters.
+
+**Parameters**:  
+This event does not accept any parameters, enabling straightforward handling of player disconnections without the need for additional data.
+
+### Example Usage
+
+```lua copy
+AddEventHandler("LGF_Utility:PlayerUnloaded", function(...) ---??
+    print("Player is in Logout")
+end)
+```

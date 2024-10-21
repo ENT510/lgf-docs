@@ -1,0 +1,61 @@
+# Progress Bar
+
+Manage `progress bars` in your application using either `client-side` or `server-side` methods. This documentation outlines how to handle progress bars effectively.
+
+---
+
+<img src="https://i.ibb.co/fY06WB6/imagedwa.png" alt="Image" />
+
+## CreateProgressBar
+
+Use the exports `CreateProgressBar` function to create a client-side progress bar:
+
+```lua copy
+exports["LGF_Utility"]:CreateProgressBar(data)
+```
+
+The `progressData` table for both progress bars data should contain the following fields:
+
+- `message`: (string) The message displayed on the progress bar.
+- `colorProgress`: (string) The color of the progress bar (optional).
+- `position`: (string) The position of the progress bar (default is "center").
+- `duration`: (number) Duration of the progress in milliseconds (default is 5000).
+- `transition`: (string) Transition effect for the progress bar (default is "fade").
+- `onFinish`: (function) Callback function when the progress is finished (optional).
+- `disableBind`: (number or boolean) false or number to allows for manual disabling of the progress bar before it completes (optional).
+- `disableKeyBind`: (table) List of key binds to disable during progress (optional).
+
+### Example Usage
+
+```lua copy
+exports["LGF_Utility"]CreateProgressBar({
+    message = "Loading...",
+    colorProgress = "rgba(54, 156, 129, 0.381)",
+    position = "center",
+    duration = 5000,
+    transition = "fade",
+    onFinish = function() print("Progress finished!") end,
+    disableBind = false,
+    disableKeyBind = { 200, 201 }  -- Example key binds
+})
+```
+
+## DisableProgressBar
+
+Use the `DisableProgressBar` export to hide the progress bar:
+
+```lua copy
+exports["LGF_Utility"]:DisableProgressBar()
+```
+
+## GetStateProgress
+
+Use the `GetStateProgress` export to check if the progress bar is currently open:
+
+```lua copy
+exports["LGF_Utility"]:GetStateProgress()
+```
+
+### Return Value
+
+- `state`: (boolean) Returns true if the progress bar is currently open, and false if it is closed.

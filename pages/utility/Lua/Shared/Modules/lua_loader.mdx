@@ -1,0 +1,113 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Lua Loader (Module)
+
+`LGF` is a Lua module system for loading and managing Lua modules dynamically. This document provides a quick guide on how to use `LGF` to load and interact with Lua modules.
+
+## Setup
+
+<Steps>
+
+### **Include**
+
+Include `LGF` in **Your Project**: Ensure that the `LGF` module is part of your project and correctly initialized.
+
+### **Initialization**
+
+Initialize `LGF` in your Lua environment. For example, in your main script or initialization file, include:
+
+```lua copy
+local LGF = exports['LGF_Utility']:UtilityData()
+```
+
+</Steps>
+
+## Usage
+
+**Loading a Module**
+
+To load a Lua module and use its functions, follow these steps:
+
+<Steps>
+
+
+### **Load the Module**
+
+<Callout type="warning" emoji="⚠️">
+  For use this api is *required* call the export **`exports['LGF_Utility']:UtilityData()`**.
+</Callout>
+
+
+```lua copy
+---@param modulName string
+---@param resourceName string  Default Invoker Resource
+---@return function | string | string[] | table
+
+local LGF = exports['LGF_Utility']:UtilityData()
+local Core = LGF:LoaderLua("framework/legacy/client")
+
+-- Load an External Module
+local External = LGF:LuaLoader("init", "LGF_Utility")
+print(json.encode(External))
+```
+
+### **Replace**
+
+`"framework/legacy/client"` with the path to the Lua module you want to load.
+
+### **Use Functions from the Module**:
+
+After loading the module, you can call its functions. For example:
+
+```lua copy
+-- Print the player's name using the loaded module
+print(Core:GetPlayerName())
+```
+
+</Steps>
+
+### Example Module
+
+Suppose you have a module file named `client.lua` in the `framework/legacy` directory. This module should return a table with functions. Here’s an example of what `client.lua` might look like:
+
+```lua copy
+-- framework/legacy/client.lua
+local Core = {}
+
+function Core:GetPlayerName()
+    return "John Doe"
+end
+
+return Core
+```
+
+## Summary
+
+<Steps>
+
+### **Import `LGF`**
+
+```lua copy
+local LGF = exports['LGF_Utility']:UtilityData()
+```
+
+### **Load a Module**
+
+```lua copy
+local Core = LGF:LoaderLua("path/to/module")
+```
+
+### **Use Module Functions**
+
+```lua copy
+print(Core:NameFunction())
+```
+
+</Steps>
+
+## Troubleshooting
+
+- **File Not Found**: Ensure that the module path you provide is correct and that the `.lua` file exists in the specified directory.
+
+- **Invalid Module**: Ensure that the module file returns a table and that it contains the expected functions.

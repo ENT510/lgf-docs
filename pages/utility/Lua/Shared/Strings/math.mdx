@@ -1,0 +1,93 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Math
+
+```lua copy
+---@module[]
+LGF.math
+```
+
+The `LGF.math` module provides utility functions for mathematical operations in Lua. Below is a description of each available function.
+
+## Find Minimum Value
+
+```lua copy
+---@param ... number
+---@return number|nil, string|nil
+LGF.math:findMin(...)
+```
+
+#### Parameters
+
+**` ... (number)`**: A variable number of numerical arguments.
+
+#### Returns
+
+- `number|nil`: The minimum value from the provided numbers, or nil if no arguments are provided.
+- `string|nil`: An error message if no arguments are provided.
+
+#### Examples
+
+```lua copy
+local minValue = LGF.math:findMin(10, 5, 8, 12)
+print(minValue) -- Output: 5
+```
+
+## Find Maximum Value
+
+```lua copy
+---@param ... number
+---@return number|nil, string|nil
+LGF.math:findMax(...)
+```
+
+#### Parameters
+
+**` ... (number)`**: A variable number of numerical arguments.
+
+#### Returns
+- `number|nil:` The maximum value from the provided numbers, or nil if no arguments are provided.
+- `string|nil:` An error message if no arguments are provided.
+
+#### Examples
+
+```lua copy
+local maxValue = LGF.math:findMax(10, 5, 8, 12)
+print(maxValue) -- Output: 12
+```
+
+
+
+## Round Value
+
+```lua copy
+---@param value number
+---@param decimalPlaces number|nil
+---@return number
+LGF.math:round(value, decimalPlaces)
+```
+
+
+#### Parameters
+
+- `value (number)`: The number to be rounded.
+- `decimalPlaces (number|nil)`: The number of decimal places to round to. Defaults to 0 if not provided.
+
+#### Returns
+
+**`(number)`**:: The rounded value.
+
+#### Examples
+
+```lua copy
+local roundedValue = LGF.math:round(23.4234324324)
+print(roundedValue) -- Output: 23
+```
+
+With Decimal Places
+
+```lua copy
+local roundedValue = LGF.math:round(23.4234324324, 4)
+print(roundedValue) -- Output: 23.4234
+```

@@ -1,0 +1,55 @@
+import { Tabs } from "nextra/components";
+
+# Notifications
+
+Manage `notifications` using either `client-side` or `server-side` methods in your application. This documentation outlines how to handle notifications effectively.
+
+---
+
+<img
+  src="https://i.ibb.co/Kbxbn7q/image33.png"
+  alt="Image"
+/>
+
+<Tabs items={['Client-Side', 'Server-Side']}>
+  
+  <Tabs.Tab label="Client-Side">
+    ## TriggerEvent
+
+    Use a `TriggerEvent` to trigger a client-side notification:
+
+   ```lua copy
+TriggerEvent('LGF_Utility:SendNotification', notificationData)
+    ```
+
+    ## Exports
+
+    Use `exports` to directly call utility functions for notifications:
+
+   ```lua copy
+exports['LGF_Utility']:SendNotification(notificationData)
+    ```
+
+  </Tabs.Tab>
+  
+  <Tabs.Tab label="Server-Side">
+    ## TriggerClientEvent
+
+    Use `TriggerClientEvent` to send notifications from the server to a specific client:
+
+    ```lua copy
+    TriggerClientEvent('LGF_Utility:SendNotification', targetId, notificationData)
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+- The `notificationData` table for both client-side and server-side notifications should contain the following fields:
+
+    - `id`: (string) Unique ID for the notification.
+    - `title`: (string) Title of the notification.
+    - `message`: (string) Message of the notification.
+    - `icon`: (string) Icon type available (`success`, `error`, `progress`, `line`).
+    - `duration`: (number) Duration of the notification in milliseconds.
+    - `position`: (string) Position of the notification (`top-left`, `top-right`, `bottom-left`, `bottom-right`).
+
+

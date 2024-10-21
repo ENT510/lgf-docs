@@ -1,0 +1,207 @@
+import { Callout, Tabs } from "nextra/components";
+
+# Input Management Documentation
+
+The Input Management system provides a structured and customizable way for users to interact with forms within the application. It allows developers to easily create input forms that can capture various types of data from users, ensuring a seamless user experience. The system supports multiple input types, including text, numbers, selections, and multi-line text areas, making it versatile for different use cases.
+
+---
+
+<img
+  src="https://i.ibb.co/rc1NmWT/image3.png"
+  alt="Image"
+/>
+
+
+## RegisterInput
+
+Use the `RegisterInput` function to create a customizable input form for user interaction.
+
+```lua copy
+exports["LGF_Utility"]:RegisterInput(inputID, inputTitle, fields, canClose, titleButton)
+```
+
+### Parameters
+
+- **`inputID`**: (string)  
+  A unique identifier for the input form. This value must be a string and cannot be nil.
+
+- **`inputTitle`**: (string)  
+  The title of the input form displayed at the top. This value is required.
+
+- **`fields`**: (table)  
+  A table containing the details of the input fields. Each field should be a table with the following properties:
+
+  - **`label`**: (string)  
+    The label displayed next to the input field. This value is required.
+
+  - **`placeholder`**: (string) _(optional)_  
+    Placeholder text that provides a hint on what to enter in the field.
+
+  - **`type`**: (string)  
+    The type of input. It can be one of the following:
+
+    - `"text"`: Standard text field.
+    - `"number"`: Input field for numbers.
+    - `"select"`: Dropdown menu for selection.
+    - `"password"`: Input field for passwords (characters will be hidden).
+    - `"textarea"`: Multi-line text area.
+
+  - **`options`**: (table) _(required only for `select` type)_  
+    An array of options to display in the dropdown menu, each with:
+
+    - **`label`**: (string) The label of the option.
+    - **`value`**: (string) The value associated with the option.
+
+  - **`required`**: (boolean) _(optional)_  
+    Indicates whether the field is mandatory. If set to `true`, input must be provided before submission.
+
+  - **`disabledInput`**: (boolean) _(optional)_  
+    If set to `true`, the field will be disabled and cannot be modified by the user.
+
+  - **`min`**: (number) _(optional)_  
+    Minimum value for the field, used for `number` types.
+
+  - **`max`**: (number) _(optional)_  
+    Maximum value for the field, used for `number` types.
+
+  - **`onSubmit`**: (function) _(optional)_  
+    Function to call when the field is submitted. It receives the value entered as an argument.
+
+- **`canClose`**: (boolean)  
+  Indicates whether the form can be closed by the user. This value is required.
+
+- **`titleButton`**: (string) _(optional)_  
+   The title of the close button, displayed within the form.
+
+  ```lua copy
+  local function registerInputForm()
+      local inputData = {}
+      local INPUT_REGISTERED = exports['LGF_Utility']:RegisterInput('example_form', 'Example Input Form', {
+          {
+              label = 'Name',
+              placeholder = 'Enter your name',
+              type = 'text',
+              required = true,
+              onSubmit = function(value)
+                  inputData.Name = value
+              end
+          },
+          {
+              label = 'Age',
+              placeholder = 'Enter your age',
+              type = 'number',
+              min = 0,
+              max = 120,
+              required = true,
+              onSubmit = function(value)
+                  inputData.Age = value
+              end
+          },
+          {
+              label = 'Gender',
+              type = 'select',
+              options = {
+                  { label = 'Male',   value = 'male' },
+                  { label = 'Female', value = 'female' },
+                  { label = 'Other',  value = 'other' }
+              },
+              required = true,
+              onSubmit = function(value)
+                  inputData.Gender = value
+              end
+          },
+          {
+              label = 'Password',
+              placeholder = 'Enter your password',
+              type = 'password',
+              required = true,
+              onSubmit = function(value)
+                  inputData.Password = value
+              end
+          },
+          {
+              label = 'Biography',
+              placeholder = 'Tell us about yourself',
+              type = 'textarea',
+              required = false,
+              onSubmit = function(value)
+                  inputData.Biography = value
+              end
+          },
+          {
+              label = 'Vehicle Plate',
+              placeholder = "23FF35B",
+              type = 'text',
+              disabledInput = true,
+              onSubmit = function(value)
+                  local Plate = "DAWDWAD" -- Example of setting a predefined vehicle plate
+                  inputData.VehiclePlate = Plate
+              end
+          }
+      }, true, "label button") -- Input can Close?
+
+      if INPUT_REGISTERED then
+          print(json.encode(inputData, { indent = true, empty_table_as_array = true }))
+      else
+          print('Failed to register input form')
+      end
+  end
+
+  RegisterCommand("openInput, function()
+     registerInputForm()
+  end)
+  ```
+
+### Notes
+
+- The `RegisterInput` function allows you to define various input types, including text, number, select, password, and textarea.
+- Each input can have a submission function (`onSubmit`) to handle the value entered by the user.
+- The input form can also be defined to close automatically after submission if needed.
+
+### Additional Features
+
+You can define whether specific inputs are required and set placeholders to guide users on what to enter. The input form is designed to enhance user interaction by providing a structured way to gather data efficiently.
+
+## CloseInput
+
+Use the `CloseInput` function to close a specific input form by its identifier.
+
+```lua copy
+exports["LGF_Utility"]:CloseInput(inputID)
+```
+
+### Parameters
+
+- `inputID`: (string) Unique identifier for the input form to be closed (optional).
+
+## ShowInput 
+
+Use the `ShowInput` function to display a specific input form by its identifier.
+
+```lua copy
+exports["LGF_Utility"]:ShowInput(inputID)
+```
+
+### Parameters
+
+- `inputID`: Unique identifier for the input form to be displayed (required).
+
+## GetInputState
+
+Use the `GetInputState` function to check if the input form is currently open.
+
+```lua copy
+exports["LGF_Utility"]:GetInputState()
+```
+
+### Return Value
+
+`state`: (boolean) Returns true if the input form is currently open, and false if it is closed.
+
+## ForceCloseInput
+
+Use the `ForceCloseInput` function to forcefully close any open input form.
+
+```lua copy
+exports["LGF_Utility"]:ForceCloseInput()
+```

@@ -1,0 +1,127 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+# Strings
+
+```lua copy
+---@module[]
+LGF.string
+```
+
+The `LGF.string` module provides a set of functions for string manipulation in Lua. Below is a description of the available functions and how to use them.
+
+## Random String
+
+Generates a random string based on the specified length and pattern.
+
+```lua copy
+---@param len number 
+---@param patt string
+LGF.string:RandStr(len, patt)
+```
+
+#### Parameters
+
+- **`len`** (`number`): Length of the random string.
+
+- **`patt`** (`string`): String pattern. Possible values:
+  - **`aln`**: Alphanumeric (`a-z`, `A-Z`, `0-9`).
+  - **`num`**: Numeric only (`0-9`).
+  - **`alp`**: Alphabetic (`a-z`, `A-Z`).
+  - **`hex`**: Hexadecimal (`0-9`, `a-f`).
+  - **`upp`**: Uppercase alphabetic (`A-Z`).
+  - **`low`**: Lowercase alphabetic (`a-z`).
+
+#### Returns
+
+- **`string`**: A randomly generated string based on the specified length and pattern
+
+#### Examples
+
+- Example of generating a 10-character **`alphanumeric`** string
+
+```lua copy
+print(LGF.string:RandStr(10, 'aln'))
+```
+
+- Example of generating a 16-character **`hexadecimal`** string
+
+```lua copy
+print(LGF.string:RandStr(16, 'hex'))
+```
+
+- Example of generating a 12-character **`numeric`** string
+
+```lua copy
+print(LGF.string:RandStr(12, 'num'))
+```
+
+- Example of generating an 8-character **`alphabetic`** string
+
+```lua copy
+print(LGF.string:RandStr(8, 'alp'))
+```
+
+- Example of generating a 6-character **`uppercase`** string
+
+```lua copy
+print(LGF.string:RandStr(6, 'upp'))
+```
+
+- Example of generating a 5-character **`lowercase`** string
+
+```lua copy
+print(LGF.string:RandStr(5, 'low'))
+```
+
+## Convert Lowercase string
+
+Converts a given string to lowercase.
+
+```lua copy
+LGF.string:ToLower(str)
+```
+
+
+#### Parameters
+**`str`** (`string`): The input string to be converted to lowercase.
+
+#### Returns
+
+**`string`** : The input string converted to lowercase.
+
+#### Example
+
+```lua copy
+local upperString = "PEPPE IMPASTATO"
+print(LGF.string:ToLower(upperString))
+-- Output: "peppe impastato"
+```
+
+
+
+## Trim a string 
+
+Removes all spaces from a given string.
+
+```lua copy 
+LGF.string:TrimSpace(str)
+```
+
+#### Parameters
+
+**`str`** (`string`):  The input string from which spaces will be removed.
+
+#### Returns
+
+**`string`** : The input string with all spaces removed.
+
+#### Example 
+
+- Example of removing spaces from a string
+
+```lua copy 
+local spacedString = "PEPPE IMPA STATO"
+print(LGF.string:TrimSpace(spacedString))
+-- Output: "PEPPEIMPASTATO"
+```

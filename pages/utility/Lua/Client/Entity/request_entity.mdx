@@ -1,0 +1,29 @@
+import { Steps } from "nextra-theme-docs";
+import { Callout } from "nextra/components";
+
+### RequestEntityModel
+
+`LGF:RequestEntityModel()` requests and loads a model into memory, ensuring it is available for use in creating entities. The function checks if the model exists, and if it does, waits until the model is fully loaded or a timeout occurs
+
+```lua copy
+---@param model string
+---@param timeout number
+---@return cb boolean 
+---@return model string
+LGF:RequestEntityModel(model, timeout)
+```
+
+#### Example
+
+```lua copy
+local LGF = exports['LGF_Utility']:UtilityData()
+
+-- Request and load a model
+local success, model = LGF:RequestEntityModel("prop_box_wood02a", 5000)
+
+if success then
+    print("Model successfully loaded:", model)
+else
+    print("Failed to load model:", model)
+end
+```

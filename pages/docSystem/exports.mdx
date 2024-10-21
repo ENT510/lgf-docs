@@ -1,0 +1,149 @@
+# LGF Document System
+
+The LGF Document System allows for the management and issuance of various licenses in a FiveM server, with support for `job-restricted` access and inventory integration. Below are the available exports and examples of how to use them.
+
+
+## CreateDocument (server)
+
+- Creates a document for a player based on `document type`.
+
+```lua copy
+---@param docType string
+---@param playerId number
+---@return boolean | string
+exports.LGF_DocumentSystem:CreateDocument(docType, playerId)
+```
+
+### Parameters
+
+- `docType` (string): Type of document to create `(must match a defined type)`.
+- `playerId` (number): The target player's server ID.
+
+### Example Usage
+
+```lua copy
+local success, message = exports.LGF_DocumentSystem:CreateDocument("license_id", 1)
+if success then
+    print("Document created successfully!")
+else
+    print("Error creating document:", message)
+end
+```
+
+## GetAllCards (server)
+
+Returns all `ID cards` saved in the system.
+
+```lua copy
+---@return table
+exports.LGF_DocumentSystem:GetAllCards()
+```
+
+### Example Usage
+
+```lua copy
+local cards = exports.LGF_DocumentSystem:GetAllCards()
+for _, card in pairs(cards) do
+    print(card.Name, card.IdCard)
+end
+```
+
+## HasDocumentOfType (client)
+
+- Checks if the player has a specific `type of document`.
+
+```lua copy
+---@param docType string
+---@return boolean
+exports.LGF_DocumentSystem:HasDocumentOfType(docType)
+```
+
+### Example Usage
+
+```lua copy
+local hasID = exports.LGF_DocumentSystem:HasDocumentOfType("license_id")
+if hasID then
+    print("Player has an ID card.")
+else
+    print("Player does not have an ID card.")
+end
+```
+
+##  OpenDocument (client)
+
+- Opens the document UI for a player with specific parameters. This is useful for displaying player-specific documents, such as `ID cards` or `licenses`. The UI will be customized based on the input `data` you provide.
+
+```lua copy
+---@param state boolean
+---@param data table
+exports.LGF_DocumentSystem:OpenDocument(state, data)
+```
+
+### Parameters
+
+- `state` (boolean): true to open the document UI, false to close it.
+- `data` (table): A table containing the document's details.
+
+| Key          | Type   | Description                                                                |
+| ------------ | ------ | -------------------------------------------------------------------------- |
+| `Name`       | string | The first name of the individual.                                          |
+| `Surname`    | string | The last name of the individual.                                           |
+| `Sex`        | string | The gender of the individual (e.g., "Male", "Female").                     |
+| `Dob`        | string | The date of birth in the format "DD/MM/YYYY".                              |
+| `Avatar`     | string | Base64-encoded string or URL of the individual's avatar image.             |
+| `IdCard`     | string | A unique identifier for the document (e.g., "#A0A0A0").                    |
+| `Expiration` | string | The expiration date of the document in the format "DD/MM/YYYY".            |
+| `TypeDocs`   | string | The type of document (e.g., "license_id"). This must match existing types. |
+| `Released`   | string | The release date of the document in the format "DD/MM/YYYY HH:MM".         |
+
+#### Example Usage
+
+```lua copy
+local keybind = lib.addKeybind({
+    name = 'dwadwada',
+    description = 'press k To Toggle Document',
+    defaultKey = 'K',
+    onPressed = function(self)
+    -- Check if the Document is already opened
+        local isOpened = exports.LGF_DocumentSystem:GetStateDocumentUI()
+        if isOpened then
+        -- If is opened close the document
+            exports.LGF_DocumentSystem:OpenDocument(false, {})
+        else
+        -- Retrieve the mugshot whit  MugShotBase64 and use it
+            local Mugshot = exports["MugShotBase64"]:GetMugShotBase64(cache.ped, true)
+            exports.LGF_DocumentSystem:OpenDocument(true, {
+                Name = "Entino",
+                Surname = "Calogero",
+                Sex = "Male",
+                Dob = "02/12/1998",
+                Avatar = Mugshot,
+                IdCard = ("#%s"):format(lib.string.random("A0A0A0", 6)),
+                Expiration = "02/01/2026",
+                TypeDocs = "license_id",
+                Released = "25/09/2021 21:06",
+            })
+        end
+    end,
+})
+```
+
+##  Get State Ui
+
+- Check the `state` of the UI, return true if is opened otherwise false.
+
+```lua copy
+---@return boolean
+exports.LGF_DocumentSystem:GetStateDocumentUI()
+```
+
+#### Example Usage
+
+```lua copy
+local isOpened = exports.LGF_DocumentSystem:GetStateDocumentUI()
+if isOpened then
+    print(("Is Opened is %s"):format(isOpened))
+else
+    print(("Is Opened is %s"):format(isOpened))
+end
+```

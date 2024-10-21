@@ -1,0 +1,77 @@
+# Event Handler Documentation
+
+## Vehicle Event Handler
+
+The `Vehicle Handler` class is designed to manage vehicle-related events for players within the game environment. This class includes methods for monitoring vehicle entry, exit, seat changes, and plate changes.
+
+
+#### Vehicle:Enter
+
+This event is triggered when a player enters a vehicle.
+
+```lua copy
+AddEventHandler('LGF_Utility:Vehicle:Enter', function(vehicle, seat, netId)
+    print(("Player has entered the vehicle: %s (NetID: %d), Seat: %d"):format(vehicle, netId, seat))
+end)
+```
+
+##### Parameters
+- `vehicle` (any): The handle of the vehicle being entered.
+- `seat` (number): The seat index the player occupies in the vehicle.
+- `netId` (number): The network ID of the vehicle.
+
+
+#### Vehicle:Exit
+
+This event is triggered when a player exits a vehicle.
+
+```lua copy
+AddEventHandler('LGF_Utility:Vehicle:Exit', function(vehicle, seat, netId)
+    print(("Player has exited the vehicle: %s (NetID: %d), Seat: %d"):format(vehicle, netId, seat))
+end)
+```
+
+##### Parameters
+- `vehicle` (any): The handle of the vehicle being exited.
+- `seat` (number): The seat index the player occupied before exiting.
+- `netId` (number): The network ID of the vehicle.
+
+
+
+#### Vehicle:SeatChange
+
+This event is triggered when a player changes seats in a vehicle.
+
+```lua copy
+AddEventHandler('LGF_Utility:Vehicle:SeatChange', function(vehicle, newSeat, netId)
+    print(("Player has changed seat in vehicle: %s (NetID: %d), New Seat: %d"):format(vehicle, netId, newSeat))
+end)
+```
+
+##### Parameters
+- `vehicle` (any): The handle of the vehicle where the seat change occurred.
+- `newSeat` (number): The new seat index the player occupies.
+- `netId` (number): The network ID of the vehicle.
+
+#### Vehicle:PlateChange
+
+This event is triggered when the plate of a vehicle changes.
+
+```lua copy
+AddEventHandler('LGF_Utility:Vehicle:PlateChange', function(vehicle, plate, netId)
+    print(("Vehicle plate changed: %s (NetID: %d), New Plate: %s"):format(vehicle, netId, plate))
+end)
+```
+
+##### Parameters
+- `vehicle` (any): The handle of the vehicle whose plate has changed.
+- `plate` (string): The new plate text for the vehicle.
+- `netId` (number): The network ID of the vehicle.
+
+
+
+
+
+
+
+
