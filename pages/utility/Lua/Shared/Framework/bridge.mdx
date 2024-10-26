@@ -86,10 +86,20 @@ local isLoaded = LGF.Core:PlayerLoaded()
 
 ## LGF.Core:GetGender
 
-```lua copy
-local gender = LGF.Core:GetGender()
-```
-
+<Tabs items={["Client", "Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param any 
+    local gender = LGF.Core:GetGender()
+     ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param source 
+    local gender = LGF.Core:GetGender(source)
+     ```
+  </Tabs.Tab>
+</Tabs>
 #### Returns
 
 - Returns the `gender` of the player.
@@ -119,10 +129,15 @@ local gender = LGF.Core:GetGender()
 
 <Tabs items={["Client", "Server"]} defaultIndex="1">
   <Tabs.Tab>
-    ```lua copy ---@param any local playerGroup = LGF.Core:GetGroup() ```
+    ```lua copy 
+    ---@param any 
+    local playerGroup = LGF.Core:GetGroup()
+     ```
   </Tabs.Tab>
   <Tabs.Tab>
-    ```lua copy ---@param source local playerGroup = LGF.Core:GetGroup(source)
+    ```lua copy 
+    ---@param source 
+    local playerGroup = LGF.Core:GetGroup(source)
     ```
   </Tabs.Tab>
 </Tabs>
