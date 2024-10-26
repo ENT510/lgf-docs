@@ -34,9 +34,20 @@ The `LGF.Core` module provides utility functions for interacting with player dat
 
 ## LGF.Core:GetJob
 
-```lua copy
-local job = LGF.Core:GetJob()
-```
+<Tabs items={["Client", "Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param any 
+    local playerJob = LGF.Core:GetJob() 
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param source 
+    local playerJob = LGF.Core:GetJob(source)
+    ```
+  </Tabs.Tab>
+</Tabs>
 
 #### Returns
 
@@ -44,9 +55,20 @@ local job = LGF.Core:GetJob()
 
 ## LGF.Core:GetName
 
-```lua copy
-local name = LGF.Core:GetName()
-```
+<Tabs items={["Client", "Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param any 
+    local name = LGF.Core:GetName() 
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```lua copy 
+    ---@param source 
+    local name = LGF.Core:GetName(source)
+    ```
+  </Tabs.Tab>
+</Tabs>
 
 #### Returns
 
@@ -76,11 +98,16 @@ local gender = LGF.Core:GetGender()
 
 <Tabs items={["Client", "Server"]} defaultIndex="1">
   <Tabs.Tab>
-    ```lua copy ---@param any local identifier = LGF.Core:GetIdentifier() ```
+    ```lua copy 
+    ---@param any 
+    local identifier = LGF.Core:GetIdentifier()
+     ```
   </Tabs.Tab>
   <Tabs.Tab>
-    ```lua copy ---@param source local identifier =
-    LGF.Core:GetIdentifier(source) ```
+    ```lua copy 
+    ---@param source 
+    local identifier = LGF.Core:GetIdentifier(source)
+     ```
   </Tabs.Tab>
 </Tabs>
 
