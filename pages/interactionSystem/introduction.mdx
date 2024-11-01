@@ -6,6 +6,7 @@ The **LGF Interaction System** is a DUI Handler designed to facilitate dynamic i
 
 - **Create Interaction with Pedestrian** (`createInteractionPed`): Initiates an interaction menu when a player approaches a pedestrian.
 - **Create Interaction with Vehicle** (`createInteractionVehicle`): Allows players to interact with nearby vehicles, providing options like opening or closing doors.
+- **Create Interaction with Job** (`createInteractionJob`): Enables interaction menus that can only be accessed by players with specific job roles, ensuring that interactions are relevant to the player's current occupation in the game.
 - **Close Interaction** (`closeInteraction`): Closes any open interaction menus, ensuring a smooth transition back to normal gameplay.
 
 ## Features
@@ -13,3 +14,4 @@ The **LGF Interaction System** is a DUI Handler designed to facilitate dynamic i
 - **Dynamic Interaction Points**: Enables interactions with peds and vehicles based on proximity, making the world feel more immersive and responsive.
 - **Customizable**: Easily modify interaction options through Lua tables, allowing server owners to tailor the interactions to their specific needs.
 - **User-Friendly Interface**: Integrates with NUI for displaying interaction menus, ensuring that players have an intuitive and visually appealing experience.
+- **Job-Based Interactions**: The `createInteractionJob` function allows for the creation of interaction menus that are restricted to certain job roles. This adds a layer of role-playing to the game, as only players with the specified jobs can access these interactions.

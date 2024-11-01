@@ -60,6 +60,8 @@ exports.LGF_Interaction:createInteraction({
 
 ## createInteractionVehicle
 
+![Image 2](https://i.ibb.co/r6GMKbC/image.png)
+
 - **createInteractionVehicle** allows you to create an interactive menu for players specifically for vehicle-related actions. This is useful for defining actions that can be performed in relation to vehicles in the game.
 
 ```lua copy
@@ -147,6 +149,8 @@ end)
 
 ## createInteractionPed
 
+![Image 1](https://i.ibb.co/QHdYZ1K/image.png)
+
 - **createInteractionPed** allows you to create an interactive menu for specific pedastrian entity.
 
 ```lua copy
@@ -200,6 +204,122 @@ exports.LGF_Interaction:createInteractionPed({
             description = "Description for Option 2",
             onClick = function(index)
                 print("You selected Option 2!")
+            end
+        }
+    }
+})
+
+```
+
+## createInteractionJob
+
+- The **createInteractionJob** allows you to create an interactive menu for players based on their job. This is useful for defining actions that can only be performed by players with specific job roles in the game.
+
+```lua copy
+---@param data table
+exports.LGF_Interaction:createInteractionJob(data)
+```
+
+### Parameters
+
+- `data` (table): A table containing details for the job-related interaction, including coordinates and actions available.
+
+| Key           | Type            | Description                                                  |
+| ------------- | --------------- | ------------------------------------------------------------ |
+| `Coords`      | vector3         | The coordinates where the interaction will take place.       |
+| `DataBind`    | table           | A table containing action items for the interaction.         |
+| `requiredJob` | string or table | The job or list of jobs required to access this interaction. |
+
+### DataBind Structure
+
+| Key                  | Type     | Description                                                           |
+| -------------------- | -------- | --------------------------------------------------------------------- |
+| &nbsp; `index`       | number   | A unique identifier for the action item.                              |
+| &nbsp; `title`       | string   | The display title of the action item.                                 |
+| &nbsp; `icon`        | string   | The icon associated with the action item.                             |
+| &nbsp; `description` | string   | A short description of what the action item does.                     |
+| &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
+| &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
+| &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+
+### Example Usage
+
+```lua copy
+exports.LGF_Interaction:createInteractionJob({
+    Coords = vec3(123.456, 789.101, 12.345), -- Position of interaction
+    DataBind = {
+        {
+            index = 1,
+            title = "Job Action 1",
+            icon = "icon_job1",
+            description = "Perform action 1 specific to your job.",
+            onClick = function(index)
+                print("Job action 1 executed!")
+            end
+        },
+        {
+            index = 2,
+            title = "Job Action 2",
+            icon = "icon_job2",
+            description = "Perform action 2 specific to your job.",
+            onClick = function(index)
+                print("Job action 2 executed!")
+            end
+        }
+    },
+    requiredJob = "police" -- or {"police", "medic"} for multiple job requirements
+})
+```
+
+## createInteractionGlobalModel
+
+- The **createInteractionGlobalModel** allows you to create an interactive menu for players based on specific game object models. This is useful for defining actions that can be performed on or with particular objects in the game world.
+
+```lua copy
+---@param data table
+exports.LGF_Interaction:createInteractionGlobalModel(data)
+```
+
+### Parameters
+
+- `data` (table): A table containing details for the model-related interaction, including coordinates and actions available.
+
+| Key        | Type   | Description                                                                   |
+| ---------- | ------ | ----------------------------------------------------------------------------- |
+| `Distance` | number | The maximum distance from the player to the model to trigger the interaction. |
+| `Model`    | table  | A table containing the identifiers of the models that can be interacted with. |
+| `DataBind` | table  | A table containing action items for the interaction.                          |
+
+### DataBind Structure
+
+| Key                  | Type     | Description                                                           |
+| -------------------- | -------- | --------------------------------------------------------------------- |
+| &nbsp; `index`       | number   | A unique identifier for the action item.                              |
+| &nbsp; `title`       | string   | The display title of the action item.                                 |
+| &nbsp; `icon`        | string   | The icon associated with the action item.                             |
+| &nbsp; `description` | string   | A short description of what the action item does.                     |
+| &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
+| &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
+| &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+
+### Example Usage
+
+```lua copy
+exports.LGF_Interaction:createInteractionGlobalModel({
+    Distance = 4.0,
+    Model = {
+        [GetHashKey("prop_dumpster_3a")] = true,
+        [GetHashKey("prop_dumpster_4a")] = true,
+        [GetHashKey("prop_dumpster_01a")] = true
+    },
+    DataBind = {
+        {
+            index = 1,
+            title = "Search Dumpster",
+            icon = "trash",
+            description = "Search in Dumpster",
+            onClick = function(index, model, coords)
+                exports.ox_inventory:openInventory("dumpster")
             end
         }
     }
