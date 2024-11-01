@@ -1,0 +1,208 @@
+# Available Exports
+
+## createInteraction
+
+- **createInteraction** allows you to create an interactive menu for players with specific options. This is useful for defining actions that can be performed based on proximity to various entities, such as pedestrians or vehicles.
+
+```lua copy
+---@param data table
+exports.LGF_Interaction:createInteraction(data)
+```
+
+### Parameters
+
+- `data` (table): A table containing details for the interaction, including coordinates and the actions available.
+
+| Key        | Type    | Description                                            |
+| ---------- | ------- | ------------------------------------------------------ |
+| `Coords`   | vector3 | The coordinates where the interaction will take place. |
+| `DataBind` | table   | A table containing action items for the interaction.   |
+
+### DataBind Structure
+
+| Key                  | Type     | Description                                                           |
+| -------------------- | -------- | --------------------------------------------------------------------- |
+| &nbsp; `index`       | number   | A unique identifier for the action item.                              |
+| &nbsp; `title`       | string   | The display title of the action item.                                 |
+| &nbsp; `icon`        | string   | The icon associated with the action item.                             |
+| &nbsp; `description` | string   | A short description of what the action item does.                     |
+| &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
+| &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
+| &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+
+### Example Usage
+
+```lua copy
+exports.LGF_Interaction:createInteraction({
+    Coords = vec3(-1504.6143, -435.5503, 35.5967), -- Position of interaction
+    DataBind = {
+        {
+            index = 1,
+            title = "Spawn Vehicle",
+            icon = "car",
+            description = "Spawn a Kuruma vehicle.",
+            onClick = function(index)
+                print("Kuruma spawned!")
+            end
+        },
+        {
+            index = 2,
+            title = "Heal Player",
+            icon = "health",
+            description = "Restore health to full.",
+            onClick = function(index)
+                print("Health restored!")
+            end
+        }
+    }
+})
+```
+
+## createInteractionVehicle
+
+- **createInteractionVehicle** allows you to create an interactive menu for players specifically for vehicle-related actions. This is useful for defining actions that can be performed in relation to vehicles in the game.
+
+```lua copy
+---@param data table
+exports.LGF_Interaction:createInteractionVehicle(data)
+```
+
+### Parameters
+
+- `data` (table): A table containing details for the vehicle interaction, including coordinates and the actions available.
+
+| Key          | Type    | Description                                                                           |
+| ------------ | ------- | ------------------------------------------------------------------------------------- |
+| `Entity`     | any     | The entity id of the associated vehicle for the interaction.                          |
+| `IndexBone`  | number  | The index of the specific bone of the vehicle (e.g., "boot") used for attach the DUI. |
+| `DataBind`   | table   | A table containing action items for the vehicle interaction.                          |
+| `OffsetBone` | vector3 | The offset position relative to the specified bone of the entity.                     |
+
+### DataBind Structure
+
+| Key                  | Type     | Description                                                           |
+| -------------------- | -------- | --------------------------------------------------------------------- |
+| &nbsp; `index`       | number   | A unique identifier for the action item.                              |
+| &nbsp; `title`       | string   | The display title of the action item.                                 |
+| &nbsp; `icon`        | string   | The icon associated with the action item.                             |
+| &nbsp; `description` | string   | A short description of what the action item does.                     |
+| &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
+| &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
+| &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+
+### Example Usage
+
+```lua copy
+
+local interactionCreated = false
+
+function manageVehicleInteraction()
+    local playerCoords = GetEntityCoords(cache.ped)
+    local vehicle, vehicleCoords = lib.getClosestVehicle(playerCoords, 3.0, false)
+
+    if vehicle then
+        if not interactionCreated then
+            exports.LGF_Interaction:createInteractionVehicle({
+                Entity = vehicle,
+                IndexBone = GetEntityBoneIndexByName(vehicle, "boot"),
+                DataBind = {
+                    {
+                        index = 1,
+                        title = "Open Trunk",
+                        icon = "trunk_icon",
+                        description = "Open the vehicle's trunk.",
+                        onClick = function(index)
+                            SetVehicleDoorOpen(vehicle, 5, false, false)
+                        end
+                    },
+                    {
+                        index = 2,
+                        title = "Close Trunk",
+                        icon = "trunk_icon",
+                        description = "Close the vehicle's trunk.",
+                        onClick = function(index)
+                            SetVehicleDoorShut(vehicle, 5, false)
+                        end
+                    }
+                }
+            })
+            interactionCreated = true -- Interaction created
+        end
+    else
+        if interactionCreated then
+            exports.LGF_Interaction:closeInteraction() -- Close interaction if no vehicles are nearby
+            interactionCreated = false
+        end
+    end
+end
+
+Citizen.CreateThread(function()
+    while true do
+        Wait(1000)                    -- Check every  second
+        manageVehicleInteraction() -- Call the function to manage vehicle interaction
+    end
+end)
+
+```
+
+## createInteractionPed
+
+- **createInteractionPed** allows you to create an interactive menu for specific pedastrian entity.
+
+```lua copy
+---@param data table
+exports.LGF_Interaction:createInteractionPed(data)
+```
+
+### Parameters
+
+- `data` (table): A table containing details for the entity.
+
+| Key          | Type    | Description                                                                           |
+| ------------ | ------- | ------------------------------------------------------------------------------------- |
+| `Entity`     | any     | The entity id of the associated vehicle for the interaction.                          |
+| `IndexBone`  | number  | The index of the specific bone of the vehicle (e.g., "boot") used for attach the DUI. |
+| `DataBind`   | table   | A table containing action items for the vehicle interaction.                          |
+| `OffsetBone` | vector3 | The offset position relative to the specified bone of the entity.                     |
+
+### DataBind Structure
+
+| Key                  | Type     | Description                                                           |
+| -------------------- | -------- | --------------------------------------------------------------------- |
+| &nbsp; `index`       | number   | A unique identifier for the action item.                              |
+| &nbsp; `title`       | string   | The display title of the action item.                                 |
+| &nbsp; `icon`        | string   | The icon associated with the action item.                             |
+| &nbsp; `description` | string   | A short description of what the action item does.                     |
+| &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
+| &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
+| &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+
+### Example Usage
+
+```lua copy
+exports.LGF_Interaction:createInteractionPed({
+    Entity = PlayerPedId(),
+    IndexBone = 31086,
+    DataBind = {
+        {
+            index = 1,
+            title = "Option 1",
+            icon = "icon1",
+            description = "Description for Option 1",
+            onClick = function(index)
+                print("You selected Option 1!")
+            end
+        },
+        {
+            index = 2,
+            title = "Option 2",
+            icon = "icon2",
+            description = "Description for Option 2",
+            onClick = function(index)
+                print("You selected Option 2!")
+            end
+        }
+    }
+})
+
+```
