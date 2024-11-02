@@ -240,11 +240,12 @@ exports.LGF_Interaction:createInteractionJob(data)
 
 - `data` (table): A table containing details for the job-related interaction, including coordinates and actions available.
 
-| Key           | Type            | Description                                                  |
-| ------------- | --------------- | ------------------------------------------------------------ |
-| `Coords`      | vector3         | The coordinates where the interaction will take place.       |
-| `DataBind`    | table           | A table containing action items for the interaction.         |
-| `requiredJob` | string or table | The job or list of jobs required to access this interaction. |
+| Key             | Type            | Description                                                  |
+| --------------- | --------------- | ------------------------------------------------------------ |
+| `Coords`        | vector3         | The coordinates where the interaction will take place.       |
+| `DataBind`      | table           | A table containing action items for the interaction.         |
+| `RequiredJob`   | string or table | The job or list of jobs required to access this interaction. |
+| `RequiredGrade` | number          | The min Job Grade allowed.                                   |
 
 ### DataBind Structure
 
@@ -283,7 +284,8 @@ exports.LGF_Interaction:createInteractionJob({
             end
         }
     },
-    requiredJob = "police" -- or {"police", "medic"} for multiple job requirements
+    RequiredJob = "police" -- or {"police", "medic"} for multiple job requirements
+    RequiredGrade = 1 -- If not Provided is 0
 })
 ```
 
@@ -300,12 +302,12 @@ exports.LGF_Interaction:createInteractionGlobalModel(data)
 
 - `data` (table): A table containing details for the model-related interaction, including coordinates and actions available.
 
-| Key            | Type   | Description                                                                   |
-| ---------------| ------ | ----------------------------------------------------------------------------- |
-| `Distance`     | number | The maximum distance from the player to the model to trigger the interaction. |
-| `Model`        | table  | A table containing the identifiers of the models that can be interacted with. |
-| `DataBind`     | table  | A table containing action items for the interaction.                          |
-| `OffsetCoords` | vec3   | Offset Coords.                                                                |
+| Key            | Type    | Description                                                                   |
+| -------------- | ------- | ----------------------------------------------------------------------------- |
+| `Distance`     | number  | The maximum distance from the player to the model to trigger the interaction. |
+| `Model`        | table   | A table containing the identifiers of the models that can be interacted with. |
+| `DataBind`     | table   | A table containing action items for the interaction.                          |
+| `OffsetCoords` | vector3 | The coords Offset X , Y , Z.                                                  |
 
 ### DataBind Structure
 
@@ -318,8 +320,6 @@ exports.LGF_Interaction:createInteractionGlobalModel(data)
 | &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
 | &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
 | &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
-
-
 
 ### Example Usage
 
@@ -400,4 +400,5 @@ RegisterCommand("remove", function()
     -- Later, remove the interaction using the ID
     exports['LGF_Interaction']:removeInteractionById(interactionID)
 end)
+
 ```
