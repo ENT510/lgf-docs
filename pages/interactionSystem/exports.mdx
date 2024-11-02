@@ -300,11 +300,12 @@ exports.LGF_Interaction:createInteractionGlobalModel(data)
 
 - `data` (table): A table containing details for the model-related interaction, including coordinates and actions available.
 
-| Key        | Type   | Description                                                                   |
-| ---------- | ------ | ----------------------------------------------------------------------------- |
-| `Distance` | number | The maximum distance from the player to the model to trigger the interaction. |
-| `Model`    | table  | A table containing the identifiers of the models that can be interacted with. |
-| `DataBind` | table  | A table containing action items for the interaction.                          |
+| Key            | Type   | Description                                                                   |
+| ---------------| ------ | ----------------------------------------------------------------------------- |
+| `Distance`     | number | The maximum distance from the player to the model to trigger the interaction. |
+| `Model`        | table  | A table containing the identifiers of the models that can be interacted with. |
+| `DataBind`     | table  | A table containing action items for the interaction.                          |
+| `OffsetCoords` | vec3   | Offset Coords.                                                                |
 
 ### DataBind Structure
 
@@ -317,6 +318,8 @@ exports.LGF_Interaction:createInteractionGlobalModel(data)
 | &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
 | &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
 | &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+
+
 
 ### Example Usage
 
