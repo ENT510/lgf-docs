@@ -35,6 +35,10 @@ exports.LGF_Interaction:createInteraction(data)
 | &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
 | &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
 | &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+| &nbsp; `RequestedItem` | table   | A table defining the items required to perform the action.            |
+| &nbsp;&nbsp;&nbsp;`ItemName`    | string | The name of the required item.                                      |
+| &nbsp;&nbsp;&nbsp;`ItemCount`   | number | The quantity of the required item (default is `1` if not specified).|
+
 
 ### Example Usage
 
@@ -97,6 +101,9 @@ exports.LGF_Interaction:createInteractionVehicle(data)
 | &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
 | &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
 | &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+| &nbsp; `RequestedItem` | table   | A table defining the items required to perform the action.            |
+| &nbsp;&nbsp;&nbsp;`ItemName`    | string | The name of the required item.                                      |
+| &nbsp;&nbsp;&nbsp;`ItemCount`   | number | The quantity of the required item (default is `1` if not specified).|
 
 ### Example Usage
 
@@ -191,6 +198,9 @@ exports.LGF_Interaction:createInteractionPed(data)
 | &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
 | &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
 | &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+| &nbsp; `RequestedItem` | table   | A table defining the items required to perform the action.            |
+| &nbsp;&nbsp;&nbsp;`ItemName`    | string | The name of the required item.                                      |
+| &nbsp;&nbsp;&nbsp;`ItemCount`   | number | The quantity of the required item (default is `1` if not specified).|
 
 ### Example Usage
 
@@ -258,6 +268,9 @@ exports.LGF_Interaction:createInteractionJob(data)
 | &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
 | &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
 | &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+| &nbsp; `RequestedItem` | table   | A table defining the items required to perform the action.            |
+| &nbsp;&nbsp;&nbsp;`ItemName`    | string | The name of the required item.                                      |
+| &nbsp;&nbsp;&nbsp;`ItemCount`   | number | The quantity of the required item (default is `1` if not specified).|
 
 ### Example Usage
 
@@ -269,6 +282,7 @@ exports.LGF_Interaction:createInteractionJob({
             index = 1,
             title = "Job Action 1",
             icon = "icon_job1",
+            RequestedItem = { ItemName = "water", ItemCount = 3, },
             description = "Perform action 1 specific to your job.",
             onClick = function(index)
                 print("Job action 1 executed!")
@@ -320,6 +334,9 @@ exports.LGF_Interaction:createInteractionGlobalModel(data)
 | &nbsp; `onClick`     | function | A function that defines what happens when the action item is clicked. |
 | &nbsp; `image`       | string   | A URL or path to an image associated with the action item.            |
 | &nbsp; `buttonColor` | string   | The color of the button representing the action item (in hex format). |
+| &nbsp; `RequestedItem` | table   | A table defining the items required to perform the action.            |
+| &nbsp;&nbsp;&nbsp;`ItemName`    | string | The name of the required item.                                      |
+| &nbsp;&nbsp;&nbsp;`ItemCount`   | number | The quantity of the required item (default is `1` if not specified).|
 
 ### Example Usage
 
