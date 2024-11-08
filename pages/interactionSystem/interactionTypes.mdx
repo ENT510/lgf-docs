@@ -1,0 +1,34 @@
+# LGF Interaction System
+
+The **LGF Interaction System** is a **DUI Handler** designed to facilitate dynamic interactions with various in-game entities, including pedestrians, vehicles, and models. Built on the **DUI (Draw User Interface)** system, it provides a seamless way for players to interact with the game world through a user-friendly interface.
+
+## Parameters
+
+- `data` (table): A table containing the details for the interaction, including coordinates and the actions available.
+
+- `Coords` (vector4): The coordinates where the interaction will take place.
+- `OffsetCoords` (vector3): (Optional) Additional offset for the interaction coordinates.
+- `DataBind` (table): Defines the action items available for the interaction.
+- `distance` (number): (Optional) The maximum distance for the interaction to be triggered. Default is `15`.
+- `closest` (number): (Optional) The minimum distance to use the interaction options. Default is `5.0`.
+- `onEnter` (function): (Optional) A function triggered when entering the interaction zone.
+- `onExit` (function): (Optional) A function triggered when exiting the interaction zone.
+- `nearby` (function): (Optional) A function triggered while in the interaction zone.
+- `debug` (boolean): (Optional) Enables debug mode to show visual sphere around the interaction zone.
+- `debugColour` (table): (Optional) Color settings for debug mode. Expects fields `r`, `g`, `b`, and `a`.
+- `model` (string): The model Of the ped to Create (Work only with addInteractionPed).
+- `pedID` (number/string): The ID of the ped to Create (Work only with addInteractionPed).
+
+## DataBind Structure
+
+- `index` (number): A unique identifier for the action item.
+- `title` (string): The display title of the action item.
+- `icon` (string): The icon associated with the action item.
+- `description` (string): A short description of what the action item does.
+- `onClick` (function): A function that defines what happens when the action item is clicked.
+- `canInteract`: (function) The function to control whether interaction is allowed based on proximity or conditions. Should return
+- `image` (string): A URL or path to an image associated with the action item.
+- `buttonColor` (string): The color of the button representing the action item (in hex format).
+- `RequestedItem` (table): A table defining the items required to perform the action.
+  - `ItemName` (string): The name of the required item.
+  - `ItemCount` (number): The quantity of the required item (default is `1` if not specified).

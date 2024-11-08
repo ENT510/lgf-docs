@@ -1,0 +1,81 @@
+import { Callout } from "nextra/components";
+
+
+# Interaction Void
+
+## canInteract
+
+<Callout type="error" emoji="⚠️">
+  **Relative to the `dataBind` structure**: The `canInteract` function can only
+  be used within the `dataBind` structure. This is because it is part of the
+  definition of each interactive item (such as a button or menu option)
+  displayed in the interaction system.
+</Callout>
+
+```lua copy
+---@param canInteract (func: void)
+---@return number distance
+---@return string interactionid
+---@return entity myPed
+canInteract = function(distance, interactionid, myPed)
+```
+
+- Triggered: When a Player try to interact with a Item.
+- `distance` (number): Specifies the distance from the player to the interaction distance. This value can be used to restrict interaction within a certain radius.
+- `interactionid` (string): Unique identifier for the interaction, allowing for specific actions or zones to be accessed conditionally.
+- `myPed` (entity): Represents the player’s pedestrian entity
+
+## onClick
+
+<Callout type="error" emoji="⚠️">
+  **Relative to the `dataBind` structure**: The `onClick` function is used
+  exclusively within the `dataBind` structure. It defines the behavior or action
+  that occurs when a player interacts with a specific item in the interaction
+  menu (e.g., clicking a button).
+</Callout>
+
+```lua copy
+---@param onClick - (func: void)
+---@return self - InteractionInstance
+onClick = function(self)
+```
+
+- Triggered: When player Click an Item.
+- `func`: A function to be executed when entering the interaction zone.
+- `self`: Returns the current interaction instance.
+
+## onEnter
+
+```lua copy
+---@param onEnter  (func: void)
+---@return InteractionInstance
+onEnter = function(self)
+```
+
+- Triggered: When entering the interaction zone.
+- `func`: A function to be executed when entering the interaction zone.
+- `self`: Returns the current interaction instance.
+
+## onExit
+
+```lua copy
+---@param onExit (func: void)
+---@return InteractionInstance
+onExit = function(self)
+```
+
+- Triggered: When exiting the interaction zone..
+- `func`: A function to be executed when exiting the interaction zone.
+- `self`: Returns the current interaction instance.
+
+## nearby
+
+```lua copy
+---@param onExit (func: void)
+---@return InteractionInstance
+nearby = function(self)
+```
+
+- Triggered: While in the interaction zone.
+- `func`: A function to be executed while in the interaction zone.
+- `self`: Returns the current interaction instance.

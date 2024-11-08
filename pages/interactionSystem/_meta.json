@@ -1,4 +1,6 @@
 {
-  "introduction": "Introduction",
-  "exports": "Exports Usage"
+  "interactionTypes": "Parameters",
+  "void": "Common Functions",
+  "exports_ped": "Ped Exports",
+  "global_exports": "Global Exports"
 }
