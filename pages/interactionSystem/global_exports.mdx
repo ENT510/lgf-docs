@@ -37,7 +37,7 @@ for i = 1, #InteractionZones do
                 onClick = function(self)
                     print(("Interaction with zone: %s"):format(self.id))
                 end,
-                canInteract = function(distance, interactionid, myPed)
+                canInteract = function(distance, interactionID, myPed)
                     return true
                 end
             }
@@ -54,4 +54,40 @@ for i = 1, #InteractionZones do
         end
     })
 end
+```
+
+### exports.removeInteraction
+
+```lua copy
+---@param interactionID string|number
+exports.LGF_Interaction:removeInteraction(interactionID)
+```
+
+#### Description
+
+This function is used to remove an existing interaction by its unique ID. It effectively clears the interaction area or Dui interface associated with that ID, making it no longer accessible or visible in the game.
+
+#### Parameters
+
+- `interactionID` (string|number): The unique identifier for the interaction to be removed. This ID should match the one provided when the interaction was initially created.
+
+#### Usage
+
+```lua copy
+dataBind = {
+    {
+        title = "Title title",
+        icon = "fa-comments",
+        description = "This is an interaction casual",
+        onClick = function(self)
+            -- Retrieve instance data from self
+            -- Use self.id to get the current Zone ID associated with the interaction
+            exports.LGF_Interaction:removeInteraction(self.id)
+        end,
+        canInteract = function(distance, interactionid, myPed)
+            -- Add your conditions for when the interaction is allowed
+            return true  -- Example: Always allow interaction
+        end
+    }
+},
 ```
