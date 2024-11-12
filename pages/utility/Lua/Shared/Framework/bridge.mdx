@@ -76,13 +76,54 @@ The `LGF.Core` module provides utility functions for interacting with player dat
 
 ## LGF.Core:PlayerLoaded
 
-```lua copy
-local isLoaded = LGF.Core:PlayerLoaded()
-```
+<Tabs items={["Click"]} defaultIndex="1">
+  <Tabs.Tab>
+      ```lua copy
+      local isLoaded = LGF.Core:PlayerLoaded()
+      ```
+  </Tabs.Tab>
+</Tabs>
 
 #### Returns
 
 - Returns `true` if player is loaded otherwhise `false` .
+
+## LGF.Core:GiveVehicle
+
+<Tabs items={["Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy
+    ---@param target | string 
+    ---@param props | table The props of the vehicle 
+    ---@param stored | number The state of the vehicle
+    LGF.Core:GiveVehicle(target, props, stored)
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+#### Returns
+
+- Returns `any` .
+
+
+## LGF.Core:ManageAccount
+
+<Tabs items={["Server"]} defaultIndex="1">
+  <Tabs.Tab>
+    ```lua copy
+    ---@param target | string 
+    ---@param amount | number The quantity to Manage for the account 
+    ---@typetransition amount | string  ("add" or "remove")
+    LGF.Core:ManageAccount(target, amount, typetransition)
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+
+#### Returns
+
+- Returns `any` .
+
 
 ## LGF.Core:GetGender
 
