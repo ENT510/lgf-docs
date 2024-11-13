@@ -1,6 +1,11 @@
 {
   "interactionTypes": "Parameters",
+  "information": "Information",
   "void": "Common Functions",
-  "exports_ped": "Ped Exports",
-  "global_exports": "Global Exports"
+  "types": "Types",
+  "Exports": {
+    "global_exports": "Global Exports",
+    "exports_ped": "Ped Exports",
+    "exports_entity": "Exports Entity"
+  }
 }

@@ -1,0 +1,65 @@
+import { Callout } from "nextra/components";
+
+# Register and Clean Up Interactions
+
+
+<Callout type="warning" emoji="⚠️">
+This page is important. When using exports in your resource to add interactions, it is essential to clean up the DUI elements effectively when stopping the resource. Neglecting to remove these elements can lead to residual UI artifacts and potential performance issues.
+</Callout>
+
+This Example demonstrates how to register multiple interactions for entities in a game environment and how to ensure a clean removal of all registered interactions when the resource stops. Proper cleanup helps avoid lingering UI components and maintains optimal performance.
+
+### Code Example
+
+```lua copy
+-- Define table of Peds with their positions and models
+local Ped = {
+    { Position = vec4(41.1964, 6448.3623, 31.4144, 274.0062), Model = "a_f_m_fatcult_01" },
+    { Position = vec4(60.4139, 6434.2373, 31.2951, 231.5423), Model = "a_f_m_fatcult_01" }
+}
+
+-- Table to store each entity's netID and interactionID for cleanup
+local entityInteractions = {}
+
+-- Register interactions for each entity in the Ped table
+for i = 1, #Ped do
+    -- Request model and create ped
+    local model = lib.requestModel(Ped[i].Model)
+    local entity = CreatePed(0, model, Ped[i].Position.xyz, Ped[i].Position.w, false, false)
+    local netID = NetworkGetNetworkIdFromEntity(entity)
+    
+    -- Register interaction for this entity
+    local interactionID = exports.LGF_Interaction:addInteractionEntity({
+        closest = 3.0,
+        distance = 5.0,
+        offsetCoords = vec3(0.0, 0.0, 1.0),
+        netID = netID,
+        debug = false,
+        dataBind = {
+            {
+                index = 1,
+                title = "Talk to NPC",
+                description = "Start a conversation.",
+                icon = "chat",
+                onClick = function(index)
+                    print("Interacted with NPC " .. i)
+                end,
+                canInteract = function(distance)
+                    return distance < 3.0
+                end
+            },
+        },
+    })
+
+    -- Store netID and interactionID for later cleanup
+    entityInteractions[netID] = interactionID
+end
+
+-- Cleanup all interactions on resource stop
+AddEventHandler('onResourceStop', function(resource)
+    if resource == GetCurrentResourceName() then
+        for netID, interactionID in pairs(entityInteractions) do
+            exports.LGF_Interaction:removeInteractionEntity(netID)
+        end
+    end
+end)

@@ -1,0 +1,93 @@
+# Global Istance
+
+### exports.addInteraction
+
+```lua copy
+---@param data table
+exports.LGF_Interaction:addInteraction(data)
+```
+
+#### Description
+
+This function is used to add an interaction to any object or entity in the game. It can be used for any type of interaction, not dependent on specific interaction types like `addInteractionPed`. The function is flexible and can be applied to different objects or zones in the game as needed.
+
+#### Parameters
+
+- `data` (table): A table that contains the interaction configuration, including position, actions, and any custom settings for the interaction.
+
+#### Usage
+
+```lua copy
+local InteractionZones = {
+    { Position = vec4(27.1431, -1873.0547, 23.0060, 28.5102), Description = "Enter the shop" },
+    { Position = vec4(200.3, 350.7, 32.4, 180.0),             Description = "Speak to the NPC" }
+}
+
+for i = 1, #InteractionZones do
+    local zone = InteractionZones[i]
+
+    exports.LGF_Interaction:addInteraction({
+        Coords = zone.Position, -- Coordinates of the interaction zone. This can be a single coordinate or a table of coordinates.
+        DataBind = {
+            {
+                index = 1, -- Index of the interaction item (used for identifying interactions)
+                title = "Interact with the zone",
+                icon = "fa-shopping-cart",
+                description = zone.Description,
+                onClick = function(self)
+                    print(("Interaction with zone: %s"):format(self.id))
+                end,
+                canInteract = function(distance, interactionID, myPed)
+                    return true
+                end
+            }
+        },
+        distance = 10, -- Maximum distance from the interaction zone to see the interaction (visibility range)
+        closest = 5.0, -- Minimum distance required to trigger the interaction (activation range)
+        debug = true,  -- Enables debug mode, which allows for extra logs and testing
+        onEnter = function(self)
+            print(("self Data %s"):format(msgpack.unpack(msgpack.pack(json.encode(self, { indent = true })))))
+        end,
+        onExit = function(self)
+        end,
+        nearby = function(self)
+        end
+    })
+end
+```
+
+### exports.removeInteraction
+
+```lua copy
+---@param interactionID string|number
+exports.LGF_Interaction:removeInteraction(interactionID)
+```
+
+#### Description
+
+This function is used to remove an existing interaction by its unique ID. It effectively clears the interaction area or Dui interface associated with that ID, making it no longer accessible or visible in the game.
+
+#### Parameters
+
+- `interactionID` (string|number): The unique identifier for the interaction to be removed. This ID should match the one provided when the interaction was initially created.
+
+#### Usage
+
+```lua copy
+dataBind = {
+    {
+        title = "Title title",
+        icon = "fa-comments",
+        description = "This is an interaction casual",
+        onClick = function(self)
+            -- Retrieve instance data from self
+            -- Use self.id to get the current Zone ID associated with the interaction
+            exports.LGF_Interaction:removeInteraction(self.id)
+        end,
+        canInteract = function(distance, interactionid, myPed)
+            -- Add your conditions for when the interaction is allowed
+            return true  -- Example: Always allow interaction
+        end
+    }
+},
+```

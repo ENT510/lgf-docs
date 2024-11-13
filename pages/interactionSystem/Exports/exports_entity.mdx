@@ -1,0 +1,73 @@
+import { Callout } from "nextra/components";
+
+# Entity Istance
+
+### exports.addInteractionEntity
+
+```lua copy
+---@param data table
+exports.LGF_Interaction:addInteractionEntity(data)
+```
+
+#### Description
+This function adds an interaction with an Specific entity in the game.
+
+#### Parameters
+- `data` (table): A table that contains the interaction configuration, including position, actions, and any custom settings for the interaction.
+
+#### Usage
+
+```lua copy
+local model = lib.requestModel("a_f_m_fatcult_01")
+local entity = CreatePed(0, model, GetEntityCoords(cache.ped), GetEntityHeading(cache.ped), false, false)
+exports.LGF_Interaction:addInteractionEntity({
+    closest = 3.0,
+    distance = 5.0,
+    offsetCoords = vec3(0.0, 0.0, 1.0), -- OffsetCoords (optional)
+    netID = NetworkGetEntityFromNetworkId(entity), -- Is required NetID for a safe approac,
+    debug = false,
+    dataBind = {
+        {
+            index = 1,
+            title = "Open Safe ",
+            description = "Click to open the safe.",
+            icon = "lock",
+            onClick = function(index)
+                -- Some Stuff here
+            end,
+            canInteract = function(distance, interactionID, myPed)
+                -- Simple Check example If the player have inventory open or if is not closest to the required distance
+                return distance < 3.0 and not LocalPlayer.state.invOpen
+            end
+        },
+    },
+})
+```
+
+
+
+### exports.removeInteractionEntity
+
+```lua copy
+---@param netID integer
+exports.LGF_Interaction:removeInteractionEntity(netID)
+```lua 
+
+#### Description
+
+This function removes an interaction for a specific entity using its netID. It helps clean up interactions tied to entities, ensuring efficient resource management and preventing unwanted interactions from persisting.
+
+
+#### Parameters
+
+- `netID` (integer): The network ID of the entity for which the interaction is to be removed.
+
+
+#### Usage 
+
+```lua copy
+local entityNetID = NetworkGetNetworkIdFromEntity(entity)
+exports.LGF_Interaction:removeInteractionEntity(entityNetID)
+```lua 
+
+
