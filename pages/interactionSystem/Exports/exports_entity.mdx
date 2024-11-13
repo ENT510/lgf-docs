@@ -44,14 +44,12 @@ exports.LGF_Interaction:addInteractionEntity({
 })
 ```
 
-
-
 ### exports.removeInteractionEntity
 
 ```lua copy
 ---@param netID integer
 exports.LGF_Interaction:removeInteractionEntity(netID)
-```lua 
+``` 
 
 #### Description
 
@@ -62,12 +60,11 @@ This function removes an interaction for a specific entity using its netID. It h
 
 - `netID` (integer): The network ID of the entity for which the interaction is to be removed.
 
-
 #### Usage 
 
 ```lua copy
 local entityNetID = NetworkGetNetworkIdFromEntity(entity)
 exports.LGF_Interaction:removeInteractionEntity(entityNetID)
-```lua 
+``` 
 
 
