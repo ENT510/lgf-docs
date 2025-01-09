@@ -115,8 +115,6 @@ The function **`returns`** a tuple consisting of:
 - **`message`** (string)  
   A message providing additional information about the operation, such as success or failure reasons.
 
-
-
 ## exports.getDropInfo()
 
 This export function retrieves information about a specific drop using the **`InteractionID`**.
@@ -130,32 +128,89 @@ exports.LGF_PlaceableProps:getDropInfo(InteractionID)
 
 ---
 
-- **Returns**  
-  The function returns the item data associated with the provided **`InteractionID`** in the form of a table containing the following fields:
+The function returns the item data associated with the provided **`InteractionID`** in the form of a table containing the following fields:
 
-  - **`ItemName`** (string)  
-    The name of the item being dropped.
+- **`ItemName`** (string)  
+  The name of the item being dropped.
 
-  - **`ItemLabel`** (string)  
-    The label or description for the item being dropped.
+- **`ItemLabel`** (string)  
+  The label or description for the item being dropped.
 
-  - **`ModelHash`** (number)  
-    The model hash of the item.
+- **`ModelHash`** (number)  
+  The model hash of the item.
 
-  - **`Coords`** (vector3)  
-    The coordinates where the drop is located.
+- **`Coords`** (vector3)  
+  The coordinates where the drop is located.
 
-  - **`Metadata`** (table)  
-    Any additional metadata associated with the item (e.g., serial numbers, description).
+- **`Metadata`** (table)  
+  Any additional metadata associated with the item (e.g., serial numbers, description).
 
-  - **`ItemType`** (string)  
-    The type of the item (e.g., consumable, usable).
+- **`ItemType`** (string)  
+  The type of the item (e.g., consumable, usable).
 
-  - **`IsInspectable`** (boolean)  
-    Whether the item can be inspected by players.
+- **`IsInspectable`** (boolean)  
+  Whether the item can be inspected by players.
 
-  - **`Degradable`** (boolean)  
-    Whether the item is degradable (i.e., will disappear after a certain time).
+- **`Degradable`** (boolean)  
+  Whether the item is degradable (i.e., will disappear after a certain time).
 
-  - **`DegradeTime`** (table)  
-    The time parameters for degradation (if applicable).
+- **`DegradeTime`** (table)  
+  The time parameters for degradation (if applicable).
+
+## exports.checkDegradeDrop()
+
+The `checkDegradeDrop` function is used to check the degradation status of a dropped item, specifically whether the item has started degrading and how much time is left before it is removed from the game world.
+
+```lua
+exports.LGF_PlaceableProps:checkDegradeDrop(InteractionID)
+```
+
+- **`InteractionID`** (string)  
+  The unique identifier for the drop item. This ID is assigned when the drop is created using the `createSyncedDrop` function.
+
+---
+
+The function **`returns`** A `number` representing the time remaining before the item is removed, in seconds.
+
+- If the item is configured to be degradable, the function checks if the degradation timer (DegradeStartTime) has already started.
+- If the timer has started, it calculates the elapsed time and how much time is left before the item is removed.
+- If the remaining time is 0 or less, the item has been degraded and removed.
+
+```lua
+RegisterCommand("checkDegrade", function(source, args)
+    local InteractionID = args[1]
+    local timeLeft = exports.LGF_PlaceableProps:checkDegradeDrop(InteractionID)
+
+    if timeLeft then
+        print(("Time left for degradation of drop '%s': %d seconds"):format(InteractionID, timeLeft))
+    else
+        print(("No degradation process found for drop '%s'"):format(InteractionID))
+    end
+end)
+```
+
+## exports.removeAllDrops()
+
+The **`removeAllDrops`** function is used to remove all the dropped items from the game world. It will attempt to delete every drop in the Drops table and delete Persistently the Item for all client.
+
+```lua
+exports.LGF_PlaceableProps:removeAllDrops()
+```
+
+---
+
+The function **`returns`** A boolean value indicating whether all drops were successfully removed.
+
+- **`boolean`** (string)  
+  A value indicating if the function is worked correctly.
+
+```lua
+RegisterCommand("removeAllDrops", function()
+local success = exports.LGF_PlaceableProps:removeAllDrops()
+    if success then
+        print("All drops have been successfully removed.")
+    else
+        print("No drops to remove.")
+    end
+end)
+```

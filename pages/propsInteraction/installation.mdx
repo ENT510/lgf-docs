@@ -58,6 +58,32 @@ Here’s a short video demonstrating the **LGF Placable Props** system in action
   ></iframe>
 </div>
 
+## Item Structure
+
+You need to specific the item with correct properties
+
+```lua copy
+SvConfig.PropsMatching = {
+    ["water"] = { -- Item Name
+        ModelHash = "prop_ld_flow_bottle", -- Object Prop
+        ItemType = "item", -- Item Type: "item" or "weapon"
+        IsInspectable = true,                -- If true adds an option that will allow you to inspect the item up close with a camera
+        Degradable = false,                  -- Automatically remove the item drop when it degrades
+        DegradeTime = { Min = 20, Max = 50 } -- Random time between 20 and 50 minute for degradation
+    },
+
+    -- WEAPON
+
+    ["WEAPON_ASSAULTRIFLE"] = {
+        ModelHash = "w_ar_assaultrifle",
+        ItemType = "weapon",
+        IsInspectable = false,
+        Degradable = false,
+        DegradeTime = false
+    },
+}
+```
+
 ## Summary
 
 The **LGF Placable Props** system offers a simple and efficient way to manage objects in the game world. Objects are fully customizable and can be interacted with via a visible UI above them. Thanks to integration with **OX Inventory** and the use of **DUI**, the system provides an immersive and dynamic gameplay experience without requiring direct modifications to the player's inventory.
