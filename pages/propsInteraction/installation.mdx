@@ -8,6 +8,8 @@
 
 Objects are dynamically created and placed in the game world with a unique identifier. They are synchronized across all clients, so every player can see and interact with them.
 
+Each time a player loads into the game, the system checks if there are any previously placed objects **(drops)** and ensures that these are synchronized with the client. This includes sending details of each drop, such as its position, item label, model hash, and other attributes, ensuring that the player can see and interact with any objects that were placed before they joined the server.
+
 ### 2. Object Customization
 
 Each object can be customized with various properties:
@@ -33,10 +35,6 @@ This interface is synchronized across all players, enabling smooth and shared ma
 ### 5. Extensive Client and Server Exports
 
 The system offers a wide range of **exports** for both client and server, providing flexibility for developers to integrate and extend the system according to their needs. These exports allow easy interaction and management of placed props, making it highly customizable and extensible.
-
-### 6. Synchronization cross all Client
-
-Each time a player loads into the game, the system checks if there are any previously placed objects **(drops)** and ensures that these are synchronized with the client. This includes sending details of each drop, such as its position, item label, model hash, and other attributes, ensuring that the player can see and interact with any objects that were placed before they joined the server.
 
 ## Video Demonstration
 
