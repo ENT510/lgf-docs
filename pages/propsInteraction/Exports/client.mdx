@@ -63,7 +63,7 @@ exports.LGF_PlaceableProps:getDropInfo(interactionID)
 The function  **`returns`** an object containing the drop data, which includes various details associated with the drop.
 
 ### How Get Drop Info
-
+```lua copy
 CreateThread(function()
   while true do
     Wait(1000)
@@ -77,3 +77,4 @@ CreateThread(function()
     print(json.encode(dropData, { indent = true }))
   end
 end)
+```
