@@ -1,0 +1,161 @@
+import { Callout } from "nextra/components";
+
+# LGF Placeable Props Server Exports
+
+## exports.getFrontCoords()
+
+This export function retrieves the offset coordinates of an entity, based on the provided offsets in the X, Y, and Z directions. It is created specifically for use on the server side, as there is no native function available to obtain the offset coordinates of the player in the game world.
+
+```lua copy
+exports.LGF_PlaceableProps:getFrontCoords(entity, offX, offY, offZ)
+```
+
+- **`entity`** (number)  
+  The entity (pedestrian, vehicle, or object) for which the front coordinates will be calculated. This must be a valid entity in the game world.
+
+- **`offX`** (number)  
+  The offset in the X-axis direction from the entity's position.
+
+- **`offY`** (number)  
+  The offset in the Y-axis direction from the entity's position.
+
+- **`offZ`** (number)  
+  The offset in the Z-axis direction from the entity's position.
+
+---
+
+The function **`returns`** returns the new coordinates of the entity with the specified offsets applied, in the form of a **`vector3`** object.
+
+## exports.createSyncedDrop()
+
+This export function allows for the creation of a synced drop item in the game world. The drop item is synchronized across all clients and can be configured with various properties, such as item name, coordinates, metadata, and whether it is degradable.
+
+<Callout type="warning" emoji="⚠️">
+  Ensure that the `ItemName` is correctly configured in the
+  `modules/server/sv-items.lua` file, otherwise the drop will not work properly
+</Callout>
+
+```lua copy
+exports.LGF_PlaceableProps:createSyncedDrop(data)
+```
+
+- **`ItemName`** (string)  
+  The name of the item being dropped. This should match an item defined in the configuration file located at `modules/server/sv-items.lua` and in `ox_inventory`.
+
+- **`ItemLabel`** (string)  
+  A label or description for the item being dropped, which will be visible to players.
+
+- **`Coords`** (vector3)  
+  The coordinates where the drop will appear in the game world.
+
+- **`Metadata`** (table, optional)  
+  Additional metadata about the item, such as serial numbers or descriptions.
+
+---
+
+The function **`returns`** the **`InteractionID`** of the newly created drop, which is a unique identifier for the drop item.
+
+### How Creating a new Drop
+
+In this example, we will create a synced drop using the `createSyncedDrop` function and then use `getFrontCoords` to calculate the position of the drop relative to a player. This can be useful for placing items in specific locations based on the player's position.
+
+```lua copy
+RegisterCommand("creaDrop", function(source)
+    local playerPed = GetPlayerPed(source)
+
+    -- Get the front coordinates of the player with an offset (e.g., 1 unit in front)
+    local coords = exports.LGF_PlaceableProps:getFrontCoords(playerPed, 0.0, 1.0, 0.0)
+
+
+    -- Create the synced drop at the specified coordinates
+    local interactionID = exports.LGF_PlaceableProps:createSyncedDrop({
+        ItemName = "water", -- Item name must be defined in `modules/server/sv-items.lua`
+        ItemLabel = "Water",
+        Coords = coords,
+        Metadata = {},
+    })
+
+    print(("New Drop Created with ID %s"):format(interactionID))
+end)
+```
+
+## exports.deleteDrop()
+
+This export function is used to delete a previously created drop from the game world, based on the provided `InteractionID`. Optionally, it can also add an item to the player's inventory after deleting the drop.
+
+```lua
+exports.LGF_PlaceableProps:deleteDrop(data)
+```
+
+- **`InteractionID`** (string)  
+  The unique identifier for the drop item that you want to delete. This ID is returned when the drop is created and is necessary for targeting the drop to delete.
+
+- **`AddItem`** (table, optional)  
+  If specified, the function will add an item to the player's inventory after deleting the drop. This table should contain:
+
+  - **`ItemName`** (string)  
+    The name of the item to be added. This should match an item defined in the configuration file (`modules/server/sv-items.lua`).
+
+  - **`Quantity`** (number)  
+    The quantity of the item to be added to the player's inventory.
+
+  - **`Target`** (number)  
+    The player’s ID to whom the item will be added.
+
+  - **`Metadata`** (table, optional)  
+    Additional metadata for the item being added, such as serial numbers or descriptions.
+
+---
+
+The function **`returns`** a tuple consisting of:
+
+- **`success`** (boolean)  
+  Indicates whether the operation to delete the drop was successful. It will be `true` if the drop was deleted without errors, otherwise `false`.
+
+- **`message`** (string)  
+  A message providing additional information about the operation, such as success or failure reasons.
+
+
+
+## exports.getDropInfo()
+
+This export function retrieves information about a specific drop using the **`InteractionID`**.
+
+```lua
+exports.LGF_PlaceableProps:getDropInfo(InteractionID)
+```
+
+- **`InteractionID`** (string)  
+  The unique identifier for the drop item. This ID is assigned when the drop is created using the `createSyncedDrop` function.
+
+---
+
+- **Returns**  
+  The function returns the item data associated with the provided **`InteractionID`** in the form of a table containing the following fields:
+
+  - **`ItemName`** (string)  
+    The name of the item being dropped.
+
+  - **`ItemLabel`** (string)  
+    The label or description for the item being dropped.
+
+  - **`ModelHash`** (number)  
+    The model hash of the item.
+
+  - **`Coords`** (vector3)  
+    The coordinates where the drop is located.
+
+  - **`Metadata`** (table)  
+    Any additional metadata associated with the item (e.g., serial numbers, description).
+
+  - **`ItemType`** (string)  
+    The type of the item (e.g., consumable, usable).
+
+  - **`IsInspectable`** (boolean)  
+    Whether the item can be inspected by players.
+
+  - **`Degradable`** (boolean)  
+    Whether the item is degradable (i.e., will disappear after a certain time).
+
+  - **`DegradeTime`** (table)  
+    The time parameters for degradation (if applicable).

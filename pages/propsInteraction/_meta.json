@@ -1,0 +1,7 @@
+{
+  "installation": "Installation",
+  "Exports": {
+    "client": "Client Exports",
+    "server": "Server Exports"
+  }
+}

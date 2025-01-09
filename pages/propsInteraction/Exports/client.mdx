@@ -1,0 +1,49 @@
+# LGF Placeable Props Client Exports
+
+## exports.getClosestDrop()
+
+This function retrieves the closest drop (interaction) to the specified player (ped), within the given maximum distance.
+
+```lua copy
+exports.LGF_PlaceableProps:getClosestDrop(ped, maxDistance)
+```
+
+- **`ped`** (number)  
+  The player entity (`ped`) for whom to find the closest drop. This must be a valid entity in the game world.
+
+- **`maxDistance`** (number)  
+  The maximum distance to search for the closest drop. This value must be a positive number.
+
+---
+
+The function **`returns`** an array of **object`** containing:
+
+- **`id`** (number)
+  The ID of the closest drop.
+
+- **`distance`** (number)
+  The distance from the player to the closest drop.
+
+## exports.getNearbyDrops()
+
+This function retrieves all nearby drops (interactions) within the given maximum distance from the specified player (ped).
+
+```lua copy
+exports.LGF_PlaceablePropsgetNearbyDrops(ped, maxDistance)
+```
+
+- **`ped`** (number)  
+  The player entity (`ped`) for whom to find the closest drop. This must be a valid entity in the game world.
+
+- **`maxDistance`** (number)  
+  The maximum distance to search for the closest drop. This value must be a positive number.
+
+---
+
+The function **`returns`** an array of **objects`**, each containing:
+
+- **`id`** (number)
+  The ID of the nearby drop.
+
+- **`distance`** (number)
+  The distance from the player to the nearby drop.

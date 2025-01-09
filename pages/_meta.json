@@ -3,6 +3,7 @@
   "utility": "LGF Utility",
   "docSystem": "LGF Document System",
   "interactionSystem": "LGF Interaction",
+  "propsInteraction": "LGF Placeable Props",
 
   "support": {
     "title": "Support Team",

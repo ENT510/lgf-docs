@@ -1,0 +1,63 @@
+# LGF Placable Props
+
+**LGF Placable Props** is a system that allows players to place objects in the game world without directly modifying their inventory. It integrates with the OX Inventory system and uses hooks to manage the objects. Each object is associated with a name and can be configured for advanced interactions such as degradation, inspection, and visualization through graphical interfaces.
+
+## Main Features
+
+### 1. Creation and Synchronization of Objects
+
+Objects are dynamically created and placed in the game world with a unique identifier. They are synchronized across all clients, so every player can see and interact with them.
+
+### 2. Object Customization
+
+Each object can be customized with various properties:
+
+- **Degrade Time**: Each object can have a customizable degradation time, after which it is automatically removed from the game.
+- **Inspectability**: Objects can be configured to allow close inspection, providing a detailed view through a virtual camera.
+
+### 3. Use of DUI (Drawables User Interface)
+
+DUIs are used to display a graphical interface above the object. When a player approaches an object, a UI is shown with information and interaction options such as:
+
+- Inspect the object.
+- Remove or interact with it in other ways.
+
+This interface is synchronized across all players, enabling smooth and shared management of objects.
+
+### 4. Object Management Functions
+
+- **Creation**: Objects are created in the game and synchronized across all clients.
+- **Degradation and Removal**: Degradable objects are automatically removed after a set time.
+- **Removal**: Objects can be removed and returned to the player's inventory if necessary.
+
+### 5. Extensive Client and Server Exports
+
+The system offers a wide range of **exports** for both client and server, providing flexibility for developers to integrate and extend the system according to their needs. These exports allow easy interaction and management of placed props, making it highly customizable and extensible.
+
+## Video Demonstration
+
+Here’s a short video demonstrating the **LGF Placable Props** system in action:
+
+<div
+  style={{
+    width: "100%",
+    height: "0",
+    position: "relative",
+    paddingBottom: "56.250%",
+  }}
+>
+  <iframe
+    src="https://streamable.com/e/gg18ws?quality=highest"
+    frameborder="0"
+    width="100%"
+    height="100%"
+    allowfullscreen
+    style={{ width: "100%", height: "100%", position: "absolute" }}
+    title="LGF Placable Props Video Demonstration"
+    aria-label="LGF Placable Props demonstration video"
+  ></iframe>
+</div>
+
+## Summary
+
+The **LGF Placable Props** system offers a simple and efficient way to manage objects in the game world. Objects are fully customizable and can be interacted with via a visible UI above them. Thanks to integration with **OX Inventory** and the use of **DUI**, the system provides an immersive and dynamic gameplay experience without requiring direct modifications to the player's inventory.
