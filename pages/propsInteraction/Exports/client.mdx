@@ -47,3 +47,33 @@ The function **`returns`** an array of **`objects`** each containing:
 
 - **`distance`** (number)
   The distance from the player to the nearby drop.
+
+
+## exports.getDropInfo()
+
+This function retrieves detailed information about a specific drop based on its ID.
+
+```lua copy
+exports.LGF_PlaceableProps:getDropInfo(interactionID)
+```
+
+- **`interactionID`** (string)  
+  The ID of the drop for which to fetch detailed information.
+---
+The function  **`returns`** an object containing the drop data, which includes various details associated with the drop.
+
+### How Get Drop Info
+
+CreateThread(function()
+  while true do
+    Wait(1000)
+
+    -- Get the closest drop within 10.0 units
+    local nearbyDrops = exports.LGF_PlaceableProps:getClosestDrop(PlayerPedId(), 10.0)
+
+    -- Fetch drop data for the closest drop using the id directly
+    local dropData = exports.LGF_PlaceableProps:getDropInfo(nearbyDrops.id)
+
+    print(json.encode(dropData, { indent = true }))
+  end
+end)
