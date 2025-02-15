@@ -1,0 +1,57 @@
+# ConVars Setup
+
+This document explains the configuration variables (ConVars) used to set up the inventory system. These ConVars allow for customization on the shared, client, and server context.
+
+## **Shared ConVars**
+
+These are global settings applied across all players and instances of the inventory system.
+
+```lua copy
+--Maximum number of inventory slots each player can have
+setr lgf_inventory:maxSlotInv 50
+
+--Maximum weight a player can carry in their inventory
+setr lgf_inventory:maxInvWeight 40
+
+--Enable debug mode (1 = Enabled, 0 = Disabled)
+setr lgf_inventory:enableDebug 1
+
+--Enable random item drops in trunks (1 = Yes, 0 = No)
+setr lgf_inventory:randomDropTrunks 1
+
+--Enable random item drops in dumpsters (1 = Yes, 0 = No)
+setr lgf_inventory:randomDropDumpsters 1
+```
+
+## **Client ConVars**
+
+These settings affect the individual player's client, such as keybindings, UI preferences, and visual effects.
+
+```lua copy
+--Enable screen blur effect (1 = Yes, 0 = No)
+setr lgf_inventory:screenBlur 1
+
+--Model for dropped items
+setr lgf_inventory:dropModel "hei_prop_drug_statue_box_big"
+
+--Show item sprite on dropped items (1 = Yes, 0 = No)
+setr lgf_inventory:enableSpriteDrop 1
+
+--Keybind for hotbar toggle
+setr lgf_inventory:hotbarKey "f9"
+
+--Keybind for inventory toggle
+setr lgf_inventory:inventoryKey "f3"
+
+--Enable Ammo Charger DUI (1 = Yes, 0 = No)
+setr lgf_inventory:enableAmmoChargerDui 1
+```
+
+## **Server ConVars**
+
+These settings control server-side features, such as how often inventory data is saved. They allow the server to adjust performance and backend features.
+
+```lua copy
+--Inventory data save interval in seconds
+set lgf_inventory:save_interval 120
+```

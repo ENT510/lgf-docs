@@ -4,6 +4,7 @@
   "docSystem": "LGF Document System",
   "interactionSystem": "LGF Interaction",
   "propsInteraction": "LGF Placeable Props",
+  "inventory": "LGF Inventory",
 
   "support": {
     "title": "Support Team",

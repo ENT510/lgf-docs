@@ -1,0 +1,8 @@
+{
+  "introduction": "Introduction",
+  "Common": {
+    "server_exports": "Server Exports",
+    "client_exports": "Client Exports",
+    "setup_convar": "Convar"
+  }
+}
