@@ -237,12 +237,40 @@ exports.LGF_Inventory:transferItem(from_source, to_targetId, itemName, quantity,
 
 ```lua
 --- Registers a shop for in-game transactions.
--- @param shopName string The name of the shop.
--- @param data table The shop details including items, and restrictions.
+-- @param shopName string The name of the shop (e.g., `"General Store"`).
+-- @param data table The shop details, which should include:
+-- @param data.id string A unique identifier for the shop (e.g., `"general_store"`).
+-- @param data.items table A list of items the shop sells. Each item is represented as:
+-- @param data.items.name string The name of the item (e.g., `"water"`).
+-- @param data.items.price number The price of the item in in-game currency (e.g., `100`).
+-- @param data.restrictionJobs table|false (optional) A table defining job-based restrictions for the shop:
+-- @param data.restrictionJobs.JobName string The job role required to access the shop (e.g., `"police"`).
+-- @param data.restrictionJobs.MinGrade number The minimum grade required for that job (e.g., `2`).
+-- @param data.restrictionJobs false Set to `false` if no job restrictions are needed.
+-- @param data.maxWeight number (optional) The maximum weight that the shop can manage (defaults to 100).
+-- @param data.maxSlots number (optional) The maximum number of items the shop can manage (defaults to the number of items in `items`).
 -- @return boolean success Indicates if the shop registration was successful.
 -- @return string response Contains details about the operation result.
 local success, response = exports.LGF_Inventory:registerShop(shopName, data)
 ```
+
+## Example Register Shop
+
+```lua
+local success, message = exports.LGF_Inventory:registerShop("general_store", {
+    shopName= "GeneralStore",
+    items = {
+        { name = "water",               price = 33 },
+        { name = "burger",              price = 33 },
+        { name = "WEAPON_CARBINERIFLE", price = 1000 },
+        { name = "ammo-rifle2",         price = 200 },
+    },
+    restrictionJobs = {
+        { JobName = "police", MinGrade = 2 }
+    }
+})
+```
+
 
 ## Get Money Count
 
