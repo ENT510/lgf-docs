@@ -4,7 +4,7 @@
 
 - This function checks whether a specific player's inventory has been confiscated.
 
-```lua
+```lua copy
 --- Checks if a player's inventory is confiscated
 -- @param target number The player's ID
 -- @return boolean Returns true if the inventory is confiscated, otherwise false
@@ -15,7 +15,7 @@ exports.LGF_Inventory:isInventoryConfiscated(target)
 
 - This function forces an inventory to close for a player.
 
-```lua
+```lua copy
 --- Forces an inventory to close for a player.
 -- @param target number The player's ID
 exports.LGF_Inventory:forceCloseInventory(target)
@@ -25,7 +25,7 @@ exports.LGF_Inventory:forceCloseInventory(target)
 
 - This function checks whether a player's inventory is full, based on the weight limit.
 
-```lua
+```lua copy
 --- Checks if the inventory is full based on weight
 -- @param target number The player's ID
 -- @return boolean Returns true if the inventory is full (exceeds weight limit)
@@ -36,7 +36,7 @@ exports.LGF_Inventory:isInventoryFull(target)
 
 - This function retrieves the count of a specific item in a player's inventory.
 
-```lua
+```lua copy
 --- Retrieves the count of a specific item in a player's inventory.
 -- @param target number The ID of the player.
 -- @param itemName string The name of the item.
@@ -48,7 +48,7 @@ exports.LGF_Inventory:getItemCount(target, itemName)
 
 - This function fetches the inventory data of a player.
 
-```lua
+```lua copy
 --- Fetches the inventory data of a player.
 ---@param typeInventory string Inventory type ("player", "drops", "dumpsters", "shop")
 ---@param value number|string ID or identifier of the inventory
@@ -60,7 +60,7 @@ exports.LGF_Inventory:getItemCount(target, itemName)
 
 - This function finds the first available free slot in a player's inventory.
 
-```lua
+```lua copy
 --- Finds the first available free slot in a player's inventory.
 -- @param target number The ID of the player.
 -- @return number The index of the first free slot.
@@ -71,7 +71,7 @@ exports.LGF_Inventory:getFirstFreeSlot(target)
 
 - This function adds an item to a player's inventory.
 
-```lua
+```lua copy
 --- Adds an item to a player's inventory.
 -- @param target number The ID of the player.
 -- @param itemName string The name of the item to add.
@@ -86,7 +86,7 @@ exports.LGF_Inventory:addItem(target, itemName, quantity, metadata, slot)
 
 - This function removes an item from a player's inventory.
 
-```lua
+```lua copy
 --- Removes an item from a player's inventory.
 -- @param target number The ID of the player.
 -- @param itemName string The name of the item to remove.
@@ -101,7 +101,7 @@ exports.LGF_Inventory:removeItem(target, itemName, quantity, metadata, slot)
 
 - This function retrieves the total weight of a player's inventory.
 
-```lua
+```lua copy
 --- Retrieves the total weight of a player's inventory.
 -- @param target number The ID of the player.
 -- @return number The total weight of the inventory.
@@ -112,7 +112,7 @@ local totalWeight = exports.LGF_Inventory:getInventoryWeight(target)
 
 - This function clears all items from a player's inventory.
 
-```lua
+```lua copy
 --- Clears all items from a player's inventory.
 -- @param target number The ID of the player.
 -- @return boolean True if the inventory was cleared successfully; false otherwise.
@@ -123,7 +123,7 @@ local success = exports.LGF_Inventory:clearInventory(target)
 
 - This function opens the inventory of a target player. Requires Ace permissions `"lgf_inventory.openTargetInventory"`.
 
-```lua
+```lua copy
 --- Opens the inventory of a target player. Required Ace perms "lgf_inventory.openTargetInventory"
 -- @param source number The ID of the player initiating the action.
 -- @param target number The ID of the target player whose inventory is to be opened.
@@ -135,7 +135,7 @@ local success = exports.LGF_Inventory:openTargetInventory(source, target)
 
 - This function confiscates the inventory of a target player. It can also return the confiscated inventory based on the action parameter.
 
-```lua
+```lua copy
 --- Confiscates the inventory of a target player.
 -- @param target number The ID of the player whose inventory is to be confiscated.
 -- @param action string "confiscate" to confiscate the inventory target or "add" to return a confiscated inventory.
@@ -147,7 +147,7 @@ local success = exports.LGF_Inventory:confiscateInventory(target, action)
 
 - This function checks if a player has a specific item in their inventory.
 
-```lua
+```lua copy
 --- Checks if a player has a specific item in their inventory.
 -- @param target number The ID of the player.
 -- @param itemName string The name of the item to check for.
@@ -160,7 +160,7 @@ local hasItem = exports.LGF_Inventory:hasItem(target, itemName, quantity)
 
 - This function sets metadata for a specific item in a player's inventory.
 
-```lua
+```lua copy
 --- Sets metadata for a specific item in a player's inventory.
 -- @param target number Player ID
 -- @param data table Table containing item information (itemName, metadata, slot)
@@ -173,7 +173,7 @@ local success, response = exports.LGF_Inventory:setMetadata(target, data)
 
 - This function retrieves the inventory of a specific player.
 
-```lua
+```lua copy
 --- Retrieves the inventory Items of a specific player.
 -- @param target number The ID of the player whose inventory is to be retrieved.
 -- @return table A table containing the player's inventory items.
@@ -184,7 +184,7 @@ exports.LGF_Inventory:getPlayerItems(target)
 
 - This function registers a server-side hook for a specific inventory event. It triggers a callback when the event occurs.
 
-```lua
+```lua copy
 --- Registers a server-side hook for a specific inventory event.
 -- @param eventType string The type of event to hook into (e.g., 'itemAdded', 'move').
 -- @param callback function The function to be called when the event occurs.
@@ -196,7 +196,7 @@ local id = exports.LGF_Inventory:registerServerHook(eventType, function(eventDat
 
 - This function removes a previously registered server-side hook for a specific inventory event.
 
-```lua
+```lua copy
 --- Removes a previously registered server-side hook.
 -- @param eventType string The type of event for which the hook was registered.
 -- @param id string The ID of the Hook
@@ -207,7 +207,7 @@ exports.LGF_Inventory:removeServerHook(eventType, id)
 
 - This function loads or unloads a player's inventory based on the provided boolean value.
 
-```lua
+```lua copy
 --- Loads a player's inventory.
 -- @param target number The ID of the player whose inventory is to be loaded.
 -- @param load boolean Whether to load (true) or unload (false) the player's inventory.
@@ -219,7 +219,7 @@ exports.LGF_Inventory:loadInventory(target, load)
 
 - This function transfers an item from one player to another.
 
-```lua
+```lua copy
 --- Transfers an item from one player to another.
 -- @param from_source number The source player ID.
 -- @param to_targetId number The target player ID.
@@ -235,7 +235,7 @@ exports.LGF_Inventory:transferItem(from_source, to_targetId, itemName, quantity,
 
 - This function registers a shop for in-game transactions, including items and restrictions.
 
-```lua
+```lua copy
 --- Registers a shop for in-game transactions.
 -- @param shopName string The name of the shop (e.g., `"General Store"`).
 -- @param data table The shop details, which should include:
@@ -254,9 +254,9 @@ exports.LGF_Inventory:transferItem(from_source, to_targetId, itemName, quantity,
 local success, response = exports.LGF_Inventory:registerShop(shopName, data)
 ```
 
-### Example Register Shop
+## Example Register Shop
 
-```lua
+```lua copy
 local success, message = exports.LGF_Inventory:registerShop("general_store", {
     shopName= "GeneralStore",
     items = {
@@ -276,9 +276,29 @@ local success, message = exports.LGF_Inventory:registerShop("general_store", {
 
 - This function retrieves the total money count of a player based on item "money".
 
-```lua
+```lua copy
 --- Retrieves the money count of a player.
 -- @param target number The ID of the player.
 -- @return number The total money count.
 local moneyCount = exports.LGF_Inventory:getMoneyCount(target)
+```
+
+
+## Set Durability
+
+- This function updates the durability of a specific item in a player's inventory.  
+- The specified `valueToReduce` will be subtracted from the item's current durability.  
+- If the durability reaches 0, it will not go below that value.  
+- If the slot is not provided, the function match the metadata object
+
+```lua copy
+--- Updates the durability of a specific item in a player's inventory.
+-- @param target number The ID of the player.
+-- @param itemName string The name of the item to update.
+-- @param metadata table|nil Additional metadata for the item (optional).
+-- @param slot number|nil The slot of the item (optional).
+-- @param valueToReduce number The amount to subtract from the current durability.
+-- @return boolean success Indicates if the operation was successful.
+-- @return string response Provides details about the operation result.
+local success, response = exports.LGF_Inventory:setDurability(target, itemName, metadata, slot, valueToReduce)
 ```
