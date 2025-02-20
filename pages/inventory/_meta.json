@@ -3,6 +3,13 @@
   "Common": {
     "server_exports": "Server Exports",
     "client_exports": "Client Exports",
+    "shared_exports": "Shared Exports",
     "setup_convar": "Convar"
+  },
+  "Events": {
+    "client_events": "Client Events"
+  },
+  "Data": {
+    "create_items": "Create Items"
   }
 }

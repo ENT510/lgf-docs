@@ -1,0 +1,59 @@
+# Client Events
+
+## Current Weapon Data
+
+- This event is triggered whenever a weapon is equipped or removed. It returns a table containing details about the currently equipped weapon, including its ammo count, weapon hash, and item details.
+
+```lua
+RegisterNetEvent("LGF_Inventory:weapon:CurrentWeapon", function(weaponData) end)
+```
+
+### Expected Behavior:
+
+- If the weapon is currently equipped (i.e., in hand), the event will return the details of that weapon.
+- If the weapon is holstered (not in hand), the event will return an empty table.
+
+```lua
+{
+    "currentAmmo": 0,
+    "weaponHash": -1075685676,
+    "itemData": {
+        "description": "An upgraded semi-automatic pistol with enhanced accuracy and stopping power. Ideal for close to mid-range engagements.",
+        "durability": 1.55,
+        "itemLabel": "Pistol Mk2",
+        "throwItem": false,
+        "itemType": "weapon",
+        "itemRarity": "rare",
+        "itemWeight": 4.5,
+        "closeOnUse": true,
+        "metadata": {
+            "Serial": "#Y08FTMYPFK",
+            "CurrentAmmo": 0,
+            "Durability": 86.9
+        },
+        "slot": 2,
+        "quantity": 1,
+        "itemName": "WEAPON_PISTOL_MK2",
+        "stackable": false,
+        "typeAmmo": "ammo-9"
+    }
+}
+```
+
+## Is Ped Shooting
+
+- This event is triggered whenever the player is firing a weapon. It provides information about the current weapon being used, including its ammo count, the weapon's name, type of ammo used, and the serial number (if available).
+
+```lua
+RegisterNetEvent('LGF_Inventory:isPedShooting', function(itemLabel, ammoInWeapon, itemName, typeAmmo, serial)
+    -- Event body, handles shooting logic
+end)
+```
+
+### Parameters:
+
+- `itemLabel`: The display label of the weapon being used.
+- `ammoInWeapon`: The current amount of ammo in the weapon when it is fired.
+- `itemName`: The name of the weapon being used.
+- `typeAmmo`: The type of ammo the weapon uses (e.g., "ammo-9").
+- `serial`: The serial number of the weapon, if available.

@@ -1,0 +1,126 @@
+#Creating New Items
+
+- This guide explains how to create new items for your game by defining their attributes in the shared/items.lua file. Each item is represented as a table with various fields to determine its properties, behavior, and interactions within the game.
+
+## Structure of an Item
+
+- Each item is represented by a table with the following fields:
+
+```lua
+---@class Item
+---@field slot number
+---@field itemWeight number
+---@field quantity number
+---@field itemName string
+---@field itemLabel? string
+---@field itemType? string
+---@field itemRarity? string
+---@field description? string
+---@field closeOnUse? boolean
+---@field metadata? table
+---@field durability? number
+---@field usable? boolean
+---@field throwItem? boolean
+---@field onUse? fun(item: Item): void
+---@field exports? { client?: { resourceName: string, exportName: string }, server?: { resourceName: string, exportName: string } }
+```
+
+## Fields for Defining Items
+
+Here’s what each field represents when defining an item:
+
+- **`itemName`** (string):  
+  The unique identifier for the item. This is how the item is referenced in the code.
+
+- **`itemLabel`** (string):  
+  The display name of the item visible to players.
+
+- **`itemType`** (string):  
+  Defines the type of item. The valid types are:
+
+  - `"item"`: Standard consumables or materials.
+  - `"weapon"`: Weapons that players can use.
+  - `"ammo"`: Ammunition for weapons.
+
+- **`itemRarity`** (string):  
+  Specifies how rare the item is. Common values include:
+
+  - `"common"`
+  - `"uncommon"`
+  - `"rare"`
+  - `"epic"`
+  - `"legendary"`
+
+- **`description`** (string):  
+  A brief description of the item, explaining its use or properties.
+
+- **`stackable`** (boolean):  
+  Whether the item can be stacked in the inventory. Relevant for consumables, materials, or items that are used in large quantities.
+
+- **`itemWeight`** (number):  
+  The weight of the item, affecting inventory management and carrying capacity.
+
+- **`quantity`** (number):  
+  The number of items of this type in the inventory (relevant for stackable items).
+
+- **`closeOnUse`** (boolean):  
+  Whether the item UI will close when the item is used (typically set to true for consumables).
+
+- **`durability`** (number):  
+  The durability of items that wear down over time, such as weapons or tools.
+
+- **`usable`** (boolean):  
+  If true, the item is removed on use.
+
+- **`throwItem`** (boolean):  
+  If true, the item is a throwable item, such as grenades or Molotov cocktails.
+
+- **`onUse`** (function):  
+  A function that is executed when the item is used (e.g., healing, applying a buff, etc.).
+
+- **`typeAmmo`** (string):  
+  The type of ammunition the weapon uses (used for weapons). This links the weapon to specific ammo types, like `"ammo-rifle2"`.
+
+- **`metadata`** (table):  
+  Contains additional data specific to the item. This might include serial numbers or other dynamic attributes.
+
+  - **`componentId`** (number):  
+    Used for clothing and accessories to define which part of the player's body the item is attached to (e.g., head, pants).
+  - **`maleDrawableId`** (number):  
+    Used in clothing items to define the drawable model for male characters (e.g., pants, hats).
+  - **`femaleDrawableId`** (number):  
+    Used in clothing items to define the drawable model for female characters.
+
+- **`exports`** (table):  
+  Specifies any exported functions or resources that are shared between client and server, such as custom actions triggered by using the item.
+  - **`client`** (table): Contains resource names and export names for client-side exports.
+    - **`resourceName`** (string): Defines the resource name for client-side exports.
+    - **`exportName`** (string): Defines the export name for client-side exports.
+  - **`server`** (table): Contains resource names and export names for server-side exports.
+    - **`resourceName`** (string): Defines the resource name for server-side exports.
+    - **`exportName`** (string): Defines the export name for server-side exports.
+
+## Example Item
+
+```lua copy
+    ["apple"] = {
+        itemLabel = "Apple",
+        itemWeight = 0.2,
+        itemType = "item",
+        stackable = true,
+        itemRarity = "common",
+        description = "A fresh apple that restores a small amount of hunger.",
+        closeOnUse = true,
+        exports = { client = { resourceName = "LGF_Inventory", exportName = "eatApple" } }
+    },
+
+
+-- Call the Client export like
+
+exports("eatApple", function(data)
+    if data then
+        print(json.encode(data, { indent = true }))
+    end
+end)
+
+```

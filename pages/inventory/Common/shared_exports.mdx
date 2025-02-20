@@ -1,0 +1,12 @@
+# Server Exports
+
+## Get Registered Utens
+
+- This function retrieves the list of all items that have been registered in the system. The items are stored in the LGF_Inventory.shared.items.lua.
+
+
+```lua copy
+--- Retrieve the list of all registered items in the inventory system
+-- @return table items A table containing all the registered items
+local registeredItems = exports.LGF_Inventory:getItems()
+```
