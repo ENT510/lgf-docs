@@ -318,18 +318,19 @@ local success, response = exports.LGF_Inventory:setDurability(target, itemName, 
 
 ```lua copy
 RegisterCommand("testDurability", function(source)
-    local weaponData = exports.LGF_Inventory:getWeaponData() -- Shared Export
 
-    if weaponData and weaponData.metadata and weaponData.metadata.durability then
+    local weaponData = exports.LGF_Inventory:getWeaponData() -- Shared Export
+    
+    if weaponData and weaponData.metadata and weaponData.metadata.Durability then
         local slot = weaponData.slot
         local metadata = weaponData.metadata
         local itemName = weaponData.itemName
-        local durability = metadata.durability
+        local durability = metadata.Durability
         local value = 10
 
         print(("Old Durability %s for item in slot %s"):format(durability, slot))
 
-        local success, message, newValue = exports.LGF_Inventory:setDurability(source, itemName, metadata, slot, value)
+        local success, message, newValue = exports.LGF_Inventory:setDurability(1, itemName, metadata, slot, value)
 
         if success then
             print(("New Durability %s for item in slot %s"):format(newValue, slot))
