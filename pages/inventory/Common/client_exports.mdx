@@ -1,0 +1,166 @@
+# Client Exports
+
+## Get First Free Slot
+
+- Returns the first available free slot in the player inventory.
+
+```lua copy
+--- Get the first free slot in the player's inventory
+-- @return number|nil The free slot number or nil if the inventory is full
+exports.LGF_Inventory:getFirstFreeSlot()
+```
+
+## Get Player Items
+
+- Returns the player's personal inventory safely.
+
+```lua copy
+--- Get the player's personal inventory
+-- @return Item[] The player's inventory
+exports.LGF_Inventory:getPlayerItems()
+```
+
+## Get Item From Slot
+
+- Retrieves an item from a specified slot in the player's inventory.
+
+```lua copy
+--- Get an item from the specified slot
+-- @param slot number The slot number to retrieve the item from
+-- @return Item|nil The item found, or nil if it doesn't exist
+exports.LGF_Inventory:getItemFromSlot(slot)
+```
+
+## Get Inventory Wheigh
+
+- Calculates the total weight of the player's inventory.
+
+```lua copy
+--- Calculate the total weight of the player's inventory
+-- @return number The total weight of the inventory
+exports.LGF_Inventory:getInventoryWeight()
+```
+
+## Get Money Count
+
+- This function retrieves the total money count of a player based on a specified type of money (e.g., "money", "black_money", etc.).
+
+```lua copy
+--- Retrieves the money count of a player based on the type of money.
+-- @param type string Type of money ("money", "black_money", etc.)
+-- @return number Returns the amount of the specified money type the player has in their inventory
+local moneyCount = exports.LGF_Inventory:getMoneyCount(type)
+```
+
+## Has Item
+
+- Checks if the player's inventory contains at least the given quantity of the specified item.
+
+```lua copy
+--- Check if the player's inventory contains at least the given quantity of the specified item
+-- @param itemName string The name of the item to check (case-insensitive)
+-- @param quantity number The required quantity
+-- @return boolean hasItem True if the item exists in at least the given quantity, false otherwise
+-- @return number itemCount The actual quantity of the item found
+local hasItem, itemCount =  exports.LGF_Inventory:hasItem(itemName, quantity)
+```
+
+## Is Slot Occupied
+
+- Checks if a specific slot in the player's inventory is occupied.
+
+```lua copy
+--- Check if a specific slot is occupied
+-- @param slot number The slot number to check
+-- @return boolean True if the slot is occupied, false otherwise
+exports.LGF_Inventory:isSlotOccupied(slot)
+```
+
+## Close Inventory
+
+- Closes the player's inventory.
+
+```lua copy
+--- Close the player's inventory
+exports.Inventory:closeInventory()
+```
+
+## Set Wheel State
+
+- Sets the state of the weapon wheel of gta (enabled or disabled).
+
+```lua copy
+--- Set the state of the weapon wheel (enabled or disabled)
+-- @param enabled boolean If true, the weapon wheel is enabled, otherwise it is disabled
+exports.LGF_Inventory:setWheelState(enabled)
+```
+
+## Disarm Weapon
+
+- Disarms the currently equipped weapon.
+
+```lua copy
+--- Disarm the currently equipped weapon
+exports.LGF_Inventory:disarmWeapon()
+```
+
+## Get Wheel State
+
+- Returns the current state of the weapon wheel (enabled or disabled).
+
+```lua copy
+--- Get the current state of the weapon wheel (enabled or disabled)
+-- @return boolean True if the weapon wheel is enabled, false if it is disabled
+exports.LGF_Inventory:getWheelState()
+```
+
+## Is Carry Weapon
+
+- Checks if the player is currently carrying a weapon.
+
+```lua copy
+--- Check if the player is currently carrying a weapon
+-- @return table Returns the current state of carried weapons
+exports.LGF_Inventory:isCarryWeapon()
+```
+
+# Is Inventory Open
+
+- Returns whether the player's inventory is open or not.
+
+```lua copy
+--- Check if the player's inventory is currently open
+-- @return boolean True if the inventory is open, false otherwise
+exports.LGF_Inventory:isInventoryOpen()
+```
+
+## Get Weapon Data
+
+- This function retrieves the data for a weapon equipped, including its attributes such as durability, ammo count, rarity, description, and more.
+
+```lua copy
+--- Retrieve the data of a weapon item from the inventory
+-- @return table weaponData Returns a table containing the weapon data
+-- Example structure:
+-- {
+--    durability: number,
+--    stackable: boolean,
+--    closeOnUse: boolean,
+--    metadata: {
+--        CurrentAmmo: number,
+--        Durability: number,
+--        Serial: string
+--    },
+--    itemRarity: string,
+--    itemLabel: string,
+--    itemName: string,
+--    throwItem: boolean,
+--    itemWeight: number,
+--    itemType: string,
+--    slot: number,
+--    description: string,
+--    typeAmmo: string,
+--    quantity: number
+-- }
+exports.LGF_Inventory:getWeaponData()
+```

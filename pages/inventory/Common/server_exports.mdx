@@ -281,7 +281,7 @@ local success, message = exports.LGF_Inventory:registerShop("general_store", {
 -- @param target number Player ID
 -- @param type string Type of money ("money", "black_money", etc.)
 -- @return number Returns the amount of the specified money type the player has in their inventory
-local moneyCount = exports.LGF_Inventory:getMoneyCount(target)
+local moneyCount = exports.LGF_Inventory:getMoneyCount(targe, type)
 ```
 
 ## Set Durability
@@ -319,7 +319,7 @@ local success, response = exports.LGF_Inventory:setDurability(target, itemName, 
 ```lua copy
 RegisterCommand("testDurability", function(source)
 
-    local weaponData = exports.LGF_Inventory:getWeaponData() -- Shared Export
+    local weaponData = exports.LGF_Inventory:getWeaponData() 
     
     if weaponData and weaponData.metadata and weaponData.metadata.Durability then
         local slot = weaponData.slot
@@ -339,6 +339,37 @@ RegisterCommand("testDurability", function(source)
         end
     end
 end)
+```
+
+## Get Weapon Data
+
+- This function retrieves the data for a weapon equipped, including its attributes such as durability, ammo count, rarity, description, and more.
+
+```lua copy
+--- Retrieve the data of a weapon item from the inventory
+-- @return table weaponData Returns a table containing the weapon data
+-- Example structure:
+-- {
+--    durability: number,
+--    stackable: boolean,
+--    closeOnUse: boolean,
+--    metadata: {
+--        CurrentAmmo: number,
+--        Durability: number,
+--        Serial: string
+--    },
+--    itemRarity: string,
+--    itemLabel: string,
+--    itemName: string,
+--    throwItem: boolean,
+--    itemWeight: number,
+--    itemType: string,
+--    slot: number,
+--    description: string,
+--    typeAmmo: string,
+--    quantity: number
+-- }
+exports.LGF_Inventory:getWeaponData()
 ```
 
 ## Register Crafting
