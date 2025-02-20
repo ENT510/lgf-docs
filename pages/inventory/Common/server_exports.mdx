@@ -254,7 +254,7 @@ exports.LGF_Inventory:transferItem(from_source, to_targetId, itemName, quantity,
 local success, response = exports.LGF_Inventory:registerShop(shopName, data)
 ```
 
-## Example Register Shop
+### Example Register Shop
 
 ```lua copy
 local success, message = exports.LGF_Inventory:registerShop("general_store", {
@@ -314,7 +314,7 @@ local success, response = exports.LGF_Inventory:setDurability(target, itemName, 
 - **Neither (metadata nor slot)**: If neither `metadata` nor `slot` are provided, the function cannot accurately identify the item and will return an error or warning.
 
 
-## Example Set Durability
+### Example Set Durability
 
 ```lua copy
 RegisterCommand("testDurability", function(source)
@@ -353,7 +353,7 @@ end)
 local success, message = exports.LGF_Inventory:registerCrafting(craftingId, data)
 ```
 
-## Example Register Crafting
+### Example Register Crafting
 
 ```lua copy
 local success, message = exports.LGF_Inventory:registerCrafting("bench_001", {
