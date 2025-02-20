@@ -274,25 +274,25 @@ local success, message = exports.LGF_Inventory:registerShop("general_store", {
 
 ## Get Money Count
 
-- This function retrieves the total money count of a player based on item "money".
+- This function retrieves the total money count of a player based on a specified type of money (e.g., "money", "black_money", etc.).
 
 ```lua copy
---- Retrieves the money count of a player.
--- @param target number The ID of the player.
--- @return number The total money count.
+--- Retrieves the money count of a player based on the type of money.
+-- @param target number Player ID
+-- @param type string Type of money ("money", "black_money", etc.)
+-- @return number Returns the amount of the specified money type the player has in their inventory
 local moneyCount = exports.LGF_Inventory:getMoneyCount(target)
 ```
 
-
 ## Set Durability
 
-- This function updates the durability of a specific item in a player's inventory.  
+- This function reduce the durability of a specific item in a player's inventory.  
 - The specified `valueToReduce` will be subtracted from the item's current durability.  
 - If the durability reaches 0, it will not go below that value.  
 - If the slot is not provided, the function match the metadata object
 
 ```lua copy
---- Updates the durability of a specific item in a player's inventory.
+--- reduce the durability of a specific item in a player's inventory.
 -- @param target number The ID of the player.
 -- @param itemName string The name of the item to update.
 -- @param metadata table|nil Additional metadata for the item (optional).
@@ -301,4 +301,76 @@ local moneyCount = exports.LGF_Inventory:getMoneyCount(target)
 -- @return boolean success Indicates if the operation was successful.
 -- @return string response Provides details about the operation result.
 local success, response = exports.LGF_Inventory:setDurability(target, itemName, metadata, slot, valueToReduce)
+```
+
+### Priority Rules
+
+- **metadata**: If the `slot` parameter is not provided (i.e., `nil`), the function will search for the item based on `metadata` alone. Therefore, if `slot` is not specified, `metadata` must contain enough information to identify the item uniquely.
+
+- **slot**: If the `slot` parameter is provided, it will take priority to find the item, even if there are multiple items with the same `itemName` but different slots. In this case, `metadata` is optional and can be omitted.
+
+- **Both (metadata and slot)**: If both `metadata` and `slot` are provided, the function will use both to identify the specific item in the inventory.
+
+- **Neither (metadata nor slot)**: If neither `metadata` nor `slot` are provided, the function cannot accurately identify the item and will return an error or warning.
+
+
+## Example Set Durability
+
+```lua copy
+RegisterCommand("testDurability", function(source)
+    local weaponData = exports.LGF_Inventory:getWeaponData() -- Shared Export
+
+    if weaponData and weaponData.metadata and weaponData.metadata.durability then
+        local slot = weaponData.slot
+        local metadata = weaponData.metadata
+        local itemName = weaponData.itemName
+        local durability = metadata.durability
+        local value = 10
+
+        print(("Old Durability %s for item in slot %s"):format(durability, slot))
+
+        local success, message, newValue = exports.LGF_Inventory:setDurability(source, itemName, metadata, slot, value)
+
+        if success then
+            print(("New Durability %s for item in slot %s"):format(newValue, slot))
+        else
+            print(("Error: %s"):format(message))
+        end
+    end
+end)
+```
+
+## Register Crafting
+
+- This function registers a new crafting recipe in the inventory system.
+
+```lua copy
+--- Registers a new crafting recipe.
+-- @param craftingId string Crafting ID.
+-- @param data table Crafting data (including required items and crafting duration).
+-- @return boolean success Indicates whether the registration was successful.
+-- @return string message Result message of the registration.
+local success, message = exports.LGF_Inventory:registerCrafting(craftingId, data)
+```
+
+## Example Register Crafting
+
+```lua copy
+local success, message = exports.LGF_Inventory:registerCrafting("bench_001", {
+    itemsToCraft = {
+        ["water"] = {
+            DurationCrafting = 30,
+            ItemsRequired = {
+                { itemName = "water", quantity = 5 },
+            }
+        },
+        ["burger"] = {
+            DurationCrafting = 10,
+            ItemsRequired = {
+                { itemName = "water",  quantity = 5 },
+                { itemName = "burger", quantity = 5 },
+            }
+        }
+    }
+})
 ```
