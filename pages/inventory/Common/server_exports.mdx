@@ -406,3 +406,42 @@ local success, message = exports.LGF_Inventory:registerCrafting("bench_001", {
     }
 })
 ```
+
+## Register Temporany Stash
+
+- This function registers a new Temporany Stash .
+
+
+
+```lua copy
+--- Registers a new temporary stash.
+-- @param inventoryId string The unique identifier for the stash inventory. Must be a non-empty string.
+-- @param data table The data related to the stash, including:
+--   - inventoryName (string): The name of the stash inventory.
+--   - items (table): A table of items to be added to the stash. Each item should be a table with:
+--     - name (string): The name of the item (must be registered).
+--     - quantity (number): The quantity of the item.
+--   - maxWeight (number, optional): The maximum weight capacity of the stash (default is 100).
+--   - maxSlots (number, optional): The maximum number of slots for the stash (default is the number of items provided).
+-- 
+-- @return boolean success Indicates whether the stash registration was successful.
+-- @return string response Contains a message with the result of the registration process. If unsuccessful, the reason is provided.
+local success, response = exports.LGF_Inventory:registerTempStash(inventoryId, data)
+
+```
+
+### Example Register Stash
+
+```lua copy
+local success, response = exports.LGF_Inventory:registerTempStash("stash_001", {
+    inventoryName = "Player Stash",
+    items = {
+        { name = "water", quantity = 10 },
+        { name = "burger", quantity = 5 },
+        { name = "money", quantity = 1000 }
+    },
+    maxWeight = 50,  
+    maxSlots = 20  
+})
+print(success, response)
+```

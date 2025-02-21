@@ -170,7 +170,7 @@ exports.LGF_Inventory:getWeaponData()
 - Open a shop Registered Server side by the ID
 
 ```lua copy
---- Opens the shop with the given shopId
+--- Opens the shop inventory with the given shopId
 -- @param shopId number The ID of the shop to open
 exports.LGF_Inventory:openShop(shopId)
 ```
@@ -180,7 +180,17 @@ exports.LGF_Inventory:openShop(shopId)
 - Open a crafting Registered Server side by the ID
 
 ```lua copy
---- Opens the crafting menu with the given craftingId
+--- Opens the crafting inventory with the given craftingId
 -- @param craftingId number The ID of the crafting menu to open
 exports.LGF_Inventory:openCrafting(craftingId)
+```
+
+## Open Temp Stash
+
+- Open a temporany Stash Registered Server side by the ID
+
+```lua copy
+--- Opens the stash inventory with the given stashId
+-- @param stashId number The ID of the stash menu to open
+ exports.LGF_Inventory:openTempStash(stashId)
 ```
