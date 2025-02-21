@@ -411,8 +411,6 @@ local success, message = exports.LGF_Inventory:registerCrafting("bench_001", {
 
 - This function registers a new Temporany Stash .
 
-
-
 ```lua copy
 --- Registers a new temporary stash.
 -- @param inventoryId string The unique identifier for the stash inventory. Must be a non-empty string.
@@ -426,14 +424,14 @@ local success, message = exports.LGF_Inventory:registerCrafting("bench_001", {
 -- 
 -- @return boolean success Indicates whether the stash registration was successful.
 -- @return string response Contains a message with the result of the registration process. If unsuccessful, the reason is provided.
-local success, response = exports.LGF_Inventory:registerTempStash(inventoryId, data)
+local success, response = exports.LGF_Inventory:registerTemporanyStash(inventoryId, data)
 
 ```
 
 ### Example Register Stash
 
 ```lua copy
-local success, response = exports.LGF_Inventory:registerTempStash("stash_001", {
+local success, response = exports.LGF_Inventory:registerTemporanyStash("stash_001", {
     inventoryName = "Player Stash",
     items = {
         { name = "water", quantity = 10 },
@@ -444,4 +442,17 @@ local success, response = exports.LGF_Inventory:registerTempStash("stash_001", {
     maxSlots = 20  
 })
 print(success, response)
+```
+
+
+## Delete Temporany Stash
+
+- This function Delete a  Temporany Stash by id .
+
+```lua copy
+--- Removes a temporary stash.
+-- @param inventoryId string The unique identifier for the stash inventory to be removed.
+-- @return boolean success Indicates whether the stash removal was successful.
+-- @return string response A message containing the result of the removal process.
+local success, response = exports.LGF_Inventory:deleteTempStash(inventoryId)
 ```
